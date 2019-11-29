@@ -216,3 +216,10 @@ Item.member('isHanded', function(){
 
 
 
+
+
+
+
+
+
+Game.start(room1, '허억.. 허억..\n\n급하게 숨을 들이키며 눈을 떴다\n\n도대체 여긴 어디지?..\n\n(일부 효과음이 있습니다)')
