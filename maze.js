@@ -1,16 +1,18 @@
+
 //----함수 정의----//
+
 Function.prototype.member = function(name, value){
 	this.prototype[name] = value
 }
 
-// Game Definition
+// 게임 정의
 function Game(){}
 Game.start = function(room, welcome){
 	game.start(room.id)
 	if(welcome !== undefined){
 		game.printStory(welcome)
 	} else{
-		//nothing
+		// Nothing
 	}
 }
 Game.end = function(){
@@ -23,17 +25,17 @@ Game.handItem = function(){
 	return game.getHandItem()
 }
 
-// Room Definition
+// Room 정의
 function Room(name, background){
 	this.name = name
-	this.background = background
+//	this.background = background
 	this.id = game.createRoom(name, background)
 }
 Room.member('setRoomLight', function(intensity){
 	this.id.setRoomLight(intensity)
 })
 
-// Object Definition
+// Object 정의
 function Object(room, name, image){
 	this.room = room
 	this.name = name
@@ -109,39 +111,7 @@ Object.member('isPicked', function(){
 	return this.id.isPicked()
 })
 
-// Door Definition
-function Door(room, name, closedImage, openedImage, connectedTo){
-	Object.call(this, room, name, closedImage)
-
-	// Door properties
-	this.closedImage = closedImage
-	this.openedImage = openedImage
-	this.connectedTo = connectedTo
-}
-
-Door.prototype = new Object() // inherited from Object
-
-Door.member('onClick', function(){
-	if (!this.id.isLocked() && this.id.isClosed()){
-		this.id.open()
-	}
-	else if (this.id.isOpened()){
-		if (this.connectedTo !== undefined){
-			Game.move(this.connectedTo)
-		}
-		else {
-			Game.end()
-		}
-	}
-})
-Door.member('onOpen', function(){
-	this.id.setSprite(this.openedImage)
-})
-Door.member('onClose', function(){
-	this.id.setSprite(this.closedImage)
-})
-
-// Direction Definition
+// Direction 정의
 function Direction(room, name, Image, connectedTo){
 	Object.call(this, room, name, Image)
 
@@ -149,66 +119,68 @@ function Direction(room, name, Image, connectedTo){
 	this.connectedTo = connectedTo
 }
 
-Direction.prototype = new Object() // inherited from Object
+Direction.prototype = new Object() // Object 상속
 
 Direction.member('onClick', function(){
 	Game.move(this.connectedTo)
 })
 
-// openclose Definition
-function openclose(room, name, closedImage, openedImage){
-	Object.call(this, room, name, closedImage)
-
-	this.closedImage = closedImage
-	this.openedImage = openedImage
-}
-
-openclose.prototype = new Object() // inherited from Object
-
-openclose.member('onClick', function(){
-	if (!this.id.isLocked() && this.id.isClosed()){
-		this.id.open()
-	} else if (this.id.isOpened){
-		this.id.close()
+// Arrow 정의
+function Arrow(room, name, connectedTo){
+	if(name == 'Right'){
+		Direction.call(this, room, name, '화살표-오른쪽.png', connectedTo) // Direction 상속
+	} else if(name == 'Left'){
+		Direction.call(this, room, name, '화살표-왼쪽.png', connectedTo)
+	} else if(name == 'Up'){
+		Direction.call(this, room, name, '화살표-위.png', connectedTo)
+	} else if(name == 'Down'){
+		Direction.call(this, room, name, '화살표-아래.png', connectedTo)
 	}
-})
-openclose.member('onOpen', function(){
-	this.id.setSprite(this.openedImage)
-})
-openclose.member('onClose', function(){
-	this.id.setSprite(this.closedImage)
-})
-
-// Keypad Definition
-function Keypad(room, name, image, password, callback){
-	Object.call(this, room, name, image)
-
-	this.password = password
-	this.callback = callback
 }
 
-Keypad.prototype = new Object() // inherited from Object
-
-Keypad.member('onClick', function(){
-	showKeypad('number', this.password, this.callback)
+Arrow.prototype = new Direction() // Direction 상속
+Arrow.member('onClick', function(){
+	Game.move(this.connectedTo)
 })
 
-// Item Definition
-function Item(room, name, image){
-	Object.call(this, room, name, image)
+function Maze(Name, Background, mzNum, related) {
+  Room.call(this, Name, Background)
+
+  //Maze properties
+  this.mzNum = mzNum
+  this.related = related
+/*
+  //화살표 생성(6시부터 반시계방향)
+  Down = new Arrow(this,'화살표-아래.png',undefined)
+  Right = new Arrow(this,'화살표-오른쪽.png',undefined)
+  Up = new Arrow(this,'화살표-위.png',undefined)
+  Left = new Arrow(this,'화살표-왼쪽.png',undefined)
+  this.abcde = [Down, Right, Up, Left]
+  this.Down.locate(640,360)
+  //배열 원소(item)로 반복
+/*
+  this.Arrow.forEach(function() {
+    item.resize(40)
+  })
+*/
 }
 
-Item.prototype = new Object() // inherited from Object
+//Maze.prototype = new Room() // Room 상속
 
-Item.member('onClick', function(){
-	this.id.pick()
-})
-Item.member('isHanded', function(){
-	return Game.handItem() == this.id
-})
+
+
+//Maze.member('move', function(to))
 
 
 
 
 
-//----방 생성----//
+
+
+//--미로 생성--//
+//maze0 = new Room("maze0", "미로.jpg")
+maze1 = new Maze("maze1", "미로.jpg", 1, [2,8])
+
+
+//--시작--//
+Game.start(maze1,'abc')
