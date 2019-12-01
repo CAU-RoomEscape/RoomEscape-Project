@@ -17,7 +17,7 @@ Game.end = function(){
 	game.clear()
 }
 Game.move = function(room){
-	game.move(room.id)	
+	game.move(room.id)
 }
 Game.handItem = function(){
 	return game.getHandItem()
@@ -212,9 +212,9 @@ Item.member('isHanded', function(){
 
 
 //----방 생성----//
-room1 = new Room('room1', '배경-1.png')		
-room2 = new Room('room2', '배경-4.png')		
-room3 = new Room('room3', '배경-3.png')		
+room1 = new Room('room1', '배경-1.png')
+room2 = new Room('room2', '배경-4.png')
+room3 = new Room('room3', '배경-3.png')
 storage = new Room('storage', '창고.jpg')
 lab = new Room('lab', '실험실.jpg')
 
