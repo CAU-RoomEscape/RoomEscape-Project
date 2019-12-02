@@ -95,7 +95,7 @@ room1U.dirD.setWidth(100);
 room1U.locateObject(room1U.dirD,100,600);
 
 room3U.dirD = room3U.createObject("dirD","마우스.png");
-room3U.dirD.setWidth(100);
+room3U.dirD.setWidth(100)
 room3U.locateObject(room3U.dirD,100,600);
 
 room4U.dirD = room4U.createObject("dirD","마우스.png");
