@@ -197,36 +197,36 @@ Maze.member('initShape',function(){
 Maze.member('initArrow',function(mzWhole){
   for (var i = 0; i < 4; i++) {
     if(this.mzShape[i] != undefined) {
-        this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Down',mzWhole[this.mzRelated[i]-1].mzShape[(i+2)%4]))
-        this.mzShape[i].arrow[0].locate(640,600)
+        this.mzShape[i].Down.push(new Arrow(this.mzShape[i],'Down',mzWhole[this.mzRelated[i]-1].mzShape[(i+2)%4]))
+        this.mzShape[i].Down[0].locate(640,680)
         switch (this.mzShape[i].background) {
           case '미로좌우.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+3)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
+            this.mzShape[i].Right.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+3)%4]))
+            this.mzShape[i].Right[this.mzShape[i].Right.length-1].locate(1240,360)
           case '미로좌.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
+            this.mzShape[i].Up.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
+            this.mzShape[i].Up[this.mzShape[i].Up.length-1].locate(640,40)
           case '미로좌0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(610,580)
+            this.mzShape[i].Left.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
+            this.mzShape[i].Left[this.mzShape[i].Left.length-1].locate(40,360)
             break;
           case '미로우.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
+            this.mzShape[i].Up.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
+            this.mzShape[i].Up[this.mzShape[i].Up.length-1].locate(640,40)
           case '미로우0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
+            this.mzShape[i].Right.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
+            this.mzShape[i].Right[this.mzShape[i].Right.length-1].locate(1240,360)
             break;
           case '미로.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
+            this.mzShape[i].Up.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
+            this.mzShape[i].Up[this.mzShape[i].Up.length-1].locate(640,40)
           case '미로0.jpg':
             break;
           case '미로좌우0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(610,580)
+            this.mzShape[i].Right.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
+            this.mzShape[i].Right[this.mzShape[i].Right.length-1].locate(1240,360)
+            this.mzShape[i].Left.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
+            this.mzShape[i].Left[this.mzShape[i].Left.length-1].locate(40,360)
             break;
           }
         }

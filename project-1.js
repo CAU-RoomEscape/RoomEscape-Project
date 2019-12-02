@@ -206,6 +206,7 @@ corridor1 = new Room('corridor1', '복도-1.jpg')
 room2 = new Room('room2', '방-2.jpg')
 basement1 = new Room('basement1', '지하실-1.png')
 basement2 = new Room('basement2', '지하실-2.png')
+mirrorR = new Room('mirror', '거울속_.png')
 
 
 //----첫번째 방----//
@@ -388,6 +389,8 @@ basement2.corpse1.onClick = function(){
 
 // 시체2 - 팔 0 다리 1
 // basement2.corpse2 = new Object(basement2, 'corpse2', '몸3.png')
+
+
 
 
 
