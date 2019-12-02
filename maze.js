@@ -140,6 +140,7 @@ function Arrow(room, name, connectedTo){
 }
 
 Arrow.prototype = new Direction() // Direction 상속
+
 Arrow.member('onClick', function(){
 	Game.move(this.connectedTo)
 })
@@ -149,89 +150,9 @@ function Maze(mzNum, mzRelated) {
   //Maze properties
   this.mzNum = mzNum//6
   this.mzRelated = mzRelated//5 10 7 2
-  this.mzShape = new Array()
+  this.mzShape = new Array(4)
 
 }
-Maze.member('initShape',function(){
-  for (var i = 0; i < 4; i++) {
-    if (this.mzRelated[i] !== 0) {
-      var check = 0
-      for (var j = 1; j < 4; j++) {
-        check = check + (j+1)*(this.mzRelated[(i+j)%4] > 0)
-      }
-
-      var a = String(this.mzNum)
-      var b = String(i)
-      var c = a+"mz"+b
-
-      switch (check) {
-        case 0:
-          this.mzShape[i] = new Room(c,'미로0.jpg')
-          break;
-        case 2:
-          this.mzShape[i] = new Room(c,'미로우0.jpg')
-          break;
-        case 3:
-          this.mzShape[i] = new Room(c,'미로.jpg')
-          break;
-        case 4:
-          this.mzShape[i] = new Room(c,'미로좌0.jpg')
-          break;
-        case 5:
-          this.mzShape[i] = new Room(c,'미로우.jpg')
-          break;
-        case 6:
-          this.mzShape[i] = new Room(c,'미로좌우0.jpg')
-          break;
-        case 7:
-          this.mzShape[i] = new Room(c,'미로좌.jpg')
-          break;
-        case 9:
-          this.mzShape[i] = new Room(c,'미로좌우.jpg')
-          break;
-      }
-      this.mzShape[i].arrow = new Array()
-    }
-  }
-})
-Maze.member('initArrow',function(mzWhole){
-  for (var i = 0; i < 4; i++) {
-    if(this.mzShape[i] != undefined) {
-        this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Down',mzWhole[this.mzRelated[i]-1].mzShape[(i+2)%4]))
-        this.mzShape[i].arrow[0].locate(640,600)
-        switch (this.mzShape[i].background) {
-          case '미로좌우.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+3)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
-          case '미로좌.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
-          case '미로좌0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(610,580)
-            break;
-          case '미로우.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
-          case '미로우0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
-            break;
-          case '미로.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Up',mzWhole[this.mzRelated[(i+2)%4]-1].mzShape[(i+4)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(640,560)
-          case '미로0.jpg':
-            break;
-          case '미로좌우0.jpg':
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Right',mzWhole[this.mzRelated[(i+1)%4]-1].mzShape[(i+2)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(670,580)
-            this.mzShape[i].arrow.push(new Arrow(this.mzShape[i],'Left',mzWhole[this.mzRelated[(i+3)%4]-1].mzShape[(i+5)%4]))
-            this.mzShape[i].arrow[this.mzShape[i].arrow.length-1].locate(610,580)
-            break;
-          }
-        }
-  }
-})
 
 
 //--미로 생성--//
@@ -254,12 +175,164 @@ maze[13] = new Maze(14, [13,0,15,10])
 maze[14] = new Maze(15, [14,0,16,11])
 maze[15] = new Maze(16, [15,0,-1,12])
 
+for (var k = 0; k < maze.length; k++){
+  for (var i = 0; i < 4; i++) {
+    if (maze[k].mzRelated[i] !== 0) {
+      var check = 0
+      for (var j = 1; j < 4; j++) {
+        check = check + (j+1)*(maze[k].mzRelated[(i+j)%4] > 0)
+      }
+
+      var a = String(maze[k].mzNum)
+      var b = String(i)
+      var c = "mz"+a+"_"+b
+
+      switch (check) {
+        case 0:
+        eval(c + "= new Room(c,'미로0.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로0.jpg')
+        break;
+        case 2:
+        eval(c + "= new Room(c,'미로우0.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로우0.jpg')
+        break;
+        case 3:
+        eval(c + "= new Room(c,'미로.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로.jpg')
+        break;
+        case 4:
+        eval(c + "= new Room(c,'미로좌0.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로좌0.jpg')
+        break;
+        case 5:
+        eval(c + "= new Room(c,'미로우.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로우.jpg')
+        break;
+        case 6:
+        eval(c + "= new Room(c,'미로좌우0.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로좌우0.jpg')
+        break;
+        case 7:
+        eval(c + "= new Room(c,'미로좌.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로좌.jpg')
+        break;
+        case 9:
+        eval(c + "= new Room(c,'미로좌우.jpg')");
+        eval("maze[k].mzShape[i] = " + c);
+        //          this.mzShape[i] = new Room(c,'미로좌우.jpg')
+        break;
+      }
+    }
+  }
+}
+for (var j = 1; j < maze.length-1; j++){
+  for (var i = 0; i < 4; i++) {
+    if(maze[j].mzShape[i] != undefined) {
+      maze[j].mzShape[i].Down = new Arrow(maze[j].mzShape[i],'Down',maze[maze[j].mzRelated[i]-1].mzShape[(i+2)%4])
+      maze[j].mzShape[i].Down.locate(640,600)
+      switch (maze[j].mzShape[i].background) {
+        case '미로좌우.jpg':
+        maze[j].mzShape[i].Right = new Arrow(maze[j].mzShape[i],'Right',maze[maze[j].mzRelated[(i+1)%4]-1].mzShape[(i+3)%4])
+        maze[j].mzShape[i].Right.locate(670,580)
+        case '미로좌.jpg':
+        maze[j].mzShape[i].Up = new Arrow(maze[j].mzShape[i],'Up',maze[maze[j].mzRelated[(i+2)%4]-1].mzShape[(i+4)%4])
+        maze[j].mzShape[i].Up.locate(640,560)
+        case '미로좌0.jpg':
+        maze[j].mzShape[i].Left = new Arrow(maze[j].mzShape[i],'Left',maze[maze[j].mzRelated[(i+3)%4]-1].mzShape[(i+1)%4])
+        maze[j].mzShape[i].Left.locate(610,580)
+        break;
+        case '미로우.jpg':
+        maze[j].mzShape[i].Up = new Arrow(maze[j].mzShape[i],'Up',maze[maze[j].mzRelated[(i+2)%4]-1].mzShape[(i+4)%4])
+        maze[j].mzShape[i].Up.locate(640,560)
+        case '미로우0.jpg':
+        maze[j].mzShape[i].Right = new Arrow(maze[j].mzShape[i],'Right',maze[maze[j].mzRelated[(i+1)%4]-1].mzShape[(i+3)%4])
+        maze[j].mzShape[i].Right.locate(670,580)
+        break;
+        case '미로.jpg':
+        maze[j].mzShape[i].Up = new Arrow(maze[j].mzShape[i],'Up',maze[maze[j].mzRelated[(i+2)%4]-1].mzShape[(i+4)%4])
+        maze[j].mzShape[i].Up.locate(640,560)
+        case '미로0.jpg':
+        break;
+        case '미로좌우0.jpg':
+        maze[j].mzShape[i].Right = new Arrow(maze[j].mzShape[i],'Right',maze[maze[j].mzRelated[(i+1)%4]-1].mzShape[(i+3)%4])
+        maze[j].mzShape[i].Right.locate(670,580)
+        maze[j].mzShape[i].Left = new Arrow(maze[j].mzShape[i],'Left',maze[maze[j].mzRelated[(i+3)%4]-1].mzShape[(i+1)%4])
+        maze[j].mzShape[i].Left.locate(610,580)
+        break;
+      }
+    }
+  }
+}
+//시작 미로 화살표
+
+//maze[0].mzShape[0].Down = new Arrow(maze[0].mzShape[0],'Down',//미로전방)
+//maze[0].mzShape[0].Down.locate(640,600)
+maze[0].mzShape[0].Up = new Arrow(maze[0].mzShape[0],'Up',maze[maze[0].mzRelated[2]-1].mzShape[0])
+maze[0].mzShape[0].Up.locate(640,560)
+maze[0].mzShape[0].Right = new Arrow(maze[0].mzShape[0],'Right',maze[maze[0].mzRelated[1]-1].mzShape[3])
+maze[0].mzShape[0].Right.locate(670,580)
+
+maze[0].mzShape[1].Down = new Arrow(maze[0].mzShape[1],'Down',maze[maze[0].mzRelated[1]-1].mzShape[3])
+maze[0].mzShape[1].Down.locate(640,600)
+maze[0].mzShape[1].Right = new Arrow(maze[0].mzShape[1],'Right',maze[maze[0].mzRelated[2]-1].mzShape[0])
+maze[0].mzShape[1].Right.locate(670,580)
+//maze[0].mzShape[1].Left = new Arrow(maze[0].mzShape[1],'Left',//미로전방)
+//maze[0].mzShape[1].left.locate(610,580)
+
+maze[0].mzShape[2].Down = new Arrow(maze[0].mzShape[2],'Down',maze[maze[0].mzRelated[2]-1].mzShape[0])
+maze[0].mzShape[2].Down.locate(640,600)
+//maze[0].mzShape[2].Up = new Arrow(maze[0].mzShape[2],'Up',//미로전방)
+//maze[0].mzShape[2].Up.locate(640,560)
+maze[0].mzShape[2].Left = new Arrow(maze[0].mzShape[2],'Left',maze[maze[0].mzRelated[1]-1].mzShape[3])
+maze[0].mzShape[2].Left.locate(610,580)
+
+//끝 미로 화살표
+
+maze[15].mzShape[0].Down = new Arrow(maze[15].mzShape[0],'Down',maze[maze[15].mzRelated[0]-1].mzShape[2])
+maze[15].mzShape[0].Down.locate(640,600)
+//maze[15].mzShape[0].Up =  디렉션으로 해야한다. 게임 엔드이기 때문이다.
+//maze[15].mzShape[0].Up.locate(640,560)
+maze[15].mzShape[0].Left = new Arrow(maze[15].mzShape[0],'Left',maze[maze[15].mzRelated[3]-1].mzShape[1])
+maze[15].mzShape[0].Left.locate(610,580)
+
+maze[15].mzShape[3].Down = new Arrow(maze[15].mzShape[2],'Down',maze[maze[15].mzRelated[3]-1].mzShape[1])
+maze[15].mzShape[3].Down.locate(640,600)
+maze[15].mzShape[3].Right = new Arrow(maze[15].mzShape[2],'Right',maze[maze[15].mzRelated[0]-1].mzShape[2])
+maze[15].mzShape[3].Right.locate(670,580)
+//maze[15].mzShape[3].Left = 게임 엔드
+//maze[15].mzShape[3].Left.locate(610,580)
+
+
+/*
 for (var i = 0; i < maze.length; i++) {
   maze[i].initShape()
 }
 for (var i = 1; i < maze.length-1; i++) {
-  maze[i].initArrow(maze)
+//  maze[i].initArrow(maze)
 }
 
+hello = new Room('hello','방-2.jpg')
+//hello2 = new Room('hello2','방-2.jpg')
+greet = new Array()
+hello2 = new Room('hello2','방-2.jpg')
+greet[0]=hello2
+greet[0].arrow = new Array()
+//greet[0].arrow = new Array()
+greet[1]=hello
+//greet[0] = new Room('hello','방-2.jpg')
+//greet[1] = new Room('hello2','방-2.jpg')
+greet[0].arrow.push(Left = new Arrow(greet[0],'Left',greet[1]))
+*/
+//maze[10].mzShape[2].Left = new Arrow(maze[10].mzShape[2],'Left',hello)
+//maze[10].mzShape[2].Left.locate(640,360)
+
 //--시작--//
-Game.start(maze[10].mzShape[2])
+
+Game.start(maze[0].mzShape[0])
