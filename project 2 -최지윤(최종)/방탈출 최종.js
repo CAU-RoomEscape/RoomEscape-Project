@@ -47,10 +47,7 @@ Game.handItem = function(){
 }
 
 
-//추가
-Game.makeCombination = function(object1,object2,object3){
-	game.makeCombination(object1.id,object2.id,object3.id)
-}
+
 
 
 
@@ -420,6 +417,11 @@ Item.member('isHanded', function(){
 
 })
 
+//+----------------------------추가
+Game.makeCombination = function(object1,object2,object3){
+	game.makeCombination(object1.id,object2.id,object3.id)
+}
+
 // 방생성
 Mroom1=new Room('Mroom1','room1.png')
 Mroom2=new Room('Mroom2','room2.png')
@@ -606,7 +608,7 @@ Mroom1U.text=new Object(Mroom1U,'text','마우스.png')
 Mroom1U.text.resize(250)
 Mroom1U.text.locate(650,400)
 Mroom1U.text.onClick=function(){
-	printMessage("밖에는 눈이 내리고 있다..")
+	printMessage("사진 속으로 들어 온 거 같다.. \n밖에는 눈이 내리고 있다..")
 }
 
 //쌍안경 생성
@@ -756,7 +758,7 @@ Mroom2F.paper1.locate(450,600)
 Mroom2F.paper1.hide()
 
 //기억1에서 기억2로 이동
-Mpainting2.inside=new Direction(Mpainting2,'inside','마우스.png',Mbook)
+Mpainting2.inside=new Direction(Mpainting2,'inside','마우스.png',Mbook) // 기억 1의 마지막 부분 다음 기억 장소로 대신해서 적으면 될 거 같아요 
 Mpainting2.inside.resize(800)
 Mpainting2.inside.locate(600,430)
 
