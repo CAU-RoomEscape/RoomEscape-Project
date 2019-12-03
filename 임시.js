@@ -210,7 +210,8 @@ corridor3 = new Room('corridor3', '복도-3.png')
 start_next = new Room('start_next', '방-2.jpg')
 basement1 = new Room('basement1', '지하실-1.png')
 basement2 = new Room('basement2', '지하실-2.png')
-mirrorR = new Room('mirror', '거울속_.png')
+mirrorR = new Room('mirrorR', '거울속_.png')
+ceiling = new Room('ceiling', '부활.png')
 
 
 //----첫번째 방----//
@@ -225,9 +226,9 @@ start.goat.resize(90)
 start.goat.locate(980, 80)
 start.goat.lock()
 start.goat.onClick = function(){
-	if(!start_next.gemstone.isPicked() && this.id.isLocked()){
+	if(!start.leverhandle.isPicked() && this.id.isLocked()){
 		printMessage('흑염소로 만든 박제인거 같다\n눈빛이 왠지 기분 나쁘다')
-	} else if(start_next.gemstone.isPicked() && this.id.isLocked()){
+	} else if(start.leverhandle.isPicked() && this.id.isLocked()){
 		printMessage('흑염소의 머리와 함께 무언가가 같이 떨어졌다')
 		this.id.unlock()
 		this.id.setSprite('흑염소2_.png')
@@ -288,20 +289,43 @@ corridor1.Right = new Arrow(corridor1, 'Right', corridor2)
 corridor1.Right.locate(1240, 360)
 
 //----복도2----//
-corridor2.door = new Direction(corridor2, 'door', '투명.png', corridor3)
-corridor2.door.resize(200)
-corridor2.door.locate(642, 480)
-// corridor2.door.lock()
-corridor2.door.onClick = function(){
-	/* if(~.key.isHanded() && this.id.isLocked()){
-		this.id.unlock()
-	} */
-	printMessage('밀어도 열리지 않는다\n잠겨 있는 것 같다')
+corridor2.door1 = new Object(corridor2, 'door1', '투명.png')
+corridor2.door1.resize(200)
+corridor2.door1.locate(642, 480)
+corridor2.door1.onClick = function(){
+    printMessage('문에 가까이 다가가려 하자 정신이 아득해진다\n더이상 가면 안될거 같다')
+    this.id.hide()
+}
+
+corridor2.door2 = new Object(corridor2, 'door2', '투명.png')
+corridor2.door2.resize(200)
+corridor2.door2.locate(642, 480)
+corridor2.door2.onClick = function(){
+    printMessage('그만 정신을 잃고 말았다...')
+    Game.over()
+}
+
+corridor2.door3 = new Direction(corridor2, 'door3', '투명.png', corridor3)
+corridor2.door3.resize(200)
+corridor2.door3.locate(642, 480)
+corridor2.door3.lock()
+corridor2.door3.hide()
+corridor2.door3.onClick = function(){
+	printMessage('더이상 어지럽지 않다\n')
 	Game.move(this.connectedTo)
 }
 
 corridor2.Down = new Arrow(corridor2, 'Down', corridor1)
 corridor2.Down.locate(642, 680)
+corridor2.Down.onClick = function(){
+    if(corridor2.door3.isLocked()){
+        corridor2.door1.show()
+		corridor2.door2.hide()
+		Game.move(this.connectedTo)
+    } else if(!corridor2.door3.isLocked()){
+        Game.move(this.connectedTo)
+    }
+}
 
 //----복도3----//
 corridor3.Down = new Arrow(corridor3, 'Down', corridor2)
@@ -454,35 +478,51 @@ basement2.corpse1.resize(400)
 basement2.corpse1.locate(420, 550)
 basement2.corpse1.hide()
 basement2.corpse1.onClick = function(){
-	printMessage('자세히 살펴보려 가까이 다가가자 옆의 벽에서 거울이 나타났다!')
-	basement2.mirror.show()
+    if(!start.head.isHanded()){
+        printMessage('자세히 살펴보려 가까이 다가가자 옆의 벽에서 거울이 나타났다!')
+        basement2.mirror.show()
+    } else if(start.head.isHanded()){
+        this.id.hide()
+        basement2.corpse2.show()
+    }
 }
 
+basement2.corpse2 = new Direction(basement2, 'corpse2', '몸1.png', ceiling)
+basement2.corpse2.resize(400)
+basement2.corpse2.locate(420, 550)
+basement2.corpse2.hide()
+basement2.corpse2.onClick() = function(){
+    printMessage('갑자기 등이 차갑다.. 눈앞이 어두컴컴하다')
+    this.id.hide()
+    Game.move(this.connectedTo)
+} 
 
-// 시체2 - 팔 0 다리 1
-// basement2.corpse2 = new Object(basement2, 'corpse2', '몸3.png')
+//----천장(부활)----//
+ceiling.click = new Direction(ceiling, 'click', '투명.png', basement2)
+ceiling.click.resize(800)
+ceiling.click.locate(640, 360)
+ceiling.click.onClick = function(){
+    printMessage('몸을 되찾은 모양이다!\n비틀거리면서 몸을 일으킨다 아직 목부분에 이질감이 느껴진다')
+    Game.move(this.connectedTo)
+    corridor2.door2.hide()
+    corridor2.door3.show()
+    corridor2.door3.unlock()
+}
 
-basement2.mirror = new Object(basement2, 'mirror', '거울.png')
+// 
+basement2.mirror = new Direction(basement2, 'mirror', '거울.png', mirrorR)
 basement2.mirror.resize(200)
 basement2.mirror.locate(1150, 340)
 basement2.mirror.hide()
+basement2.mirror.onClick = function(){
+    Game.move(this.connectedTo)
+    printMessage('\n누군가의 목소리를 들으며 점점 거울로 몸이 끌려간다')
+}
 
+mirrorR.tobook = new Direction(mirrorR, 'tobook', '투명.png', Mbook)
+mirrorR.tobook.resize(800)
+mirrorR.tobook.locate(640, 360)
 
+Mbook=new Room('Mbook','책속.png')
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?...')
+Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
