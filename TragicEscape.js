@@ -424,7 +424,7 @@ corridor2.door3.locate(642, 480)
 corridor2.door3.lock()
 corridor2.door3.hide()
 corridor2.door3.onClick = function(){
-	printMessage('더이상 어지럽지 않다\n')
+	printMessage('더이상 어지럽지 않다\n당장 이곳에서 벗어나야해..')
 	Game.move(this.connectedTo)
 }
 
@@ -587,7 +587,7 @@ basement2.corpse0 = new Object(basement2, 'corpse0', '몸0.png')
 basement2.corpse0.resize(400)
 basement2.corpse0.locate(420, 550)
 basement2.corpse0.onClick = function(){
-	printMessage('으악!!.. 너무 끔찍하다.. 시체의 팔다리가 없다\n그나저나 이 사람 어딘가 낯이 익은데..')
+	printMessage('으악!!.. 너무 끔찍하다.. 시체의 머리가 없다\n시체 주변에 피가 잔뜩 묻어있다..')
 	this.id.hide()
 	basement2.corpse1.show()
 }
@@ -622,7 +622,7 @@ ceiling.click = new Direction(ceiling, 'click', '투명.png', basement2)
 ceiling.click.resize(800)
 ceiling.click.locate(640, 360)
 ceiling.click.onClick = function(){
-    printMessage('몸을 되찾은 모양이다!\n비틀거리면서 몸을 일으킨다 아직 목부분에 이질감이 느껴진다')
+    printMessage('몸을 되찾은 모양이다!..\n비틀거리면서 몸을 일으킨다 아직 목부분에 이질감이 느껴진다')
     Game.move(this.connectedTo)
     corridor2.door2.hide()
     corridor2.door3.show()
@@ -1300,7 +1300,7 @@ Mroom5.girl=new Object(Mroom5,'girl','유령.png')
 Mroom5.girl.resize(160)
 Mroom5.girl.locate(650,300)
 
-Mroom5.cube2=new Item(Mroom5,'cube2','큐브-초록.png')
+Mroom5.cube2=new Item(Mroom5,'cube2','큐브-파랑.png')
 Mroom5.cube2.resize(70)
 Mroom5.cube2.locate(650,390)
 Mroom5.cube2.hide()
@@ -1374,7 +1374,7 @@ attic.angel.onClick=function(){
 
 attic.chest=new openclose(attic,'chest','chest-close.png','chest-open.png')
 attic.chest.resize(200)
-attic.chest.locate(100,500)
+attic.chest.locate(120,500)
 attic.chest.lock()
 
 attic.water=new Item(attic,'water','물병.png')
@@ -1390,7 +1390,7 @@ attic.chest.onClick=function(){
             attic.water.show()
     }
     else if(!dining1.keyy.isHanded())
-    printMessage('상자가 잠겨있는 것 같다.. 비슷한 상자가 있었던 것 같은데..?')
+    printMessage('상자가 잠겨있는 것 같다..')
 }
 
 //다락방 배치 완료
@@ -1507,14 +1507,14 @@ Mroom6.moldy.onClick=function(){
 Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
 Mroom6.transparent.resize(100)
 Mroom6.transparent.locate(640,250)
-Mroom6.transparent.show()
+Mroom6.transparent.hide()
 
 Mroom6.paper=new Object(Mroom6,'paper','종이-힌트.png')
 Mroom6.paper.resize(80)
 Mroom6.paper.locate(800,600)
 
 Mroom6.paper.onClick=function(){
-    showImageViewer('종이-힌트2.png')
+    showImageViewer('종이-힌트1.png')
     printMessage('중요한 날..? 기억해 둬야 겠다.')
 }
 
@@ -1532,7 +1532,6 @@ Mroom6.totheForest.onClick=function(){
 Mroom6.transparent.onClick=function(){
 if(Mroom6.moldb.isOpened()&&Mroom6.moldr.isOpened())
 {
-    Mroom6.transparent.hide()
     Mroom6.totheForest.show()
 
    // room2.totheForest.show()
@@ -1692,9 +1691,9 @@ path3.photo2.lock()
 path3.photo2.onClick=function(){
     showImageViewer('기억2다이어리.png')
 if(path1.photo1.isOpened()){
-    printMessage('아까 본 그 커플이다..여전히 행복해 보이는데... 지금 내가 느끼는 이 불안감은 뭐지..?\n그리고 이건 누구의 기억이지..?')
+    printMessage('아까 본 그 커플이다..여전히 행복해 보이는데...\n지금 내가 느끼는 이 불안감은 뭐지..?\n그리고 이건 누구의 기억이지..?')
 }
-else{  printMessage('어떤 커플의 결혼사진이다. 그런데 이 둘 모두 너무 낯이 익다.. \n 그리고 여자쪽은.. 아까 사라졌던 그림자와 너무 비슷하게 생겼다.')}
+else{  printMessage('어떤 커플의 결혼사진이다. 그런데 이 둘 모두 너무 낯이 익다..\n 그리고 여자쪽은.. 아까 사라졌던 그림자와 비슷한 느낌인데..')}
 
     path3.photo2.open()
 }
@@ -1717,7 +1716,7 @@ path7.photo4.lock()
 
 path7.photo4.onClick=function(){
     showImageViewer('기억4다이어리.png')
-    printMessage('점점 일기의 내용이 불안하다.. 여기 이 숲길은 지금 이곳과 비슷한 것 같고..오두막은 내가 아까 갔던 그곳이 분명하다.')
+    printMessage('점점 일기의 내용이 불안하다..\n여기 이 숲길은 지금 이곳과 비슷한 것 같고..\n오두막은 내가 아까 갔던 그곳이 분명하다.')
     path7.photo4.open()
 }
 
@@ -1728,7 +1727,7 @@ path9.photo5.lock()
 
 path9.photo5.onClick=function(){
     showImageViewer('기억5다이어리.png')
-    printMessage('이게 무슨 끔찍한 일인가..!! 여기는 아까 갔던 오두막 안 인것 같다.. 그곳에서 도대체 무슨일이 일어났던 것이지..?\n 그리고..난.. 누구지..?')
+    printMessage('이거는 아까 그 오두막 안 인것 같은데.. 도대체 무슨일이 있었던거지?!\n 그리고.. 난.. 누구지..?')
 path9.photo5.open()
 }
 
@@ -1794,13 +1793,13 @@ pathfinal.people.onClick=function(){
     printMessage('낯선 남자가 다이어리를 건네고 있다. 이 다이어리는 지금까지 봤던 남자의 다이어리와 같은 것이다..')
     }
     else{
-        printMessage('이 사람들은 뭐지..? 나에게 뭔가 말하고 있다\n\n사람들 : 모든 기억을 찾아 돌아오면 사건의 진실을 알려주겠다... ')
+        printMessage('이 사람들은 뭐지..? 나에게 뭔가 말하고 있다\n"숲에서 모든 기억들을 찾아 돌아오면 마지막 진실을 알려주겠다.."')
     }
 }
 
 man.diary.onClick=function(){
     showImageViewer('마지막 다이어리.png')
-    printMessage('이 일기를 보게 될 나에게..? 이것은.. 내가.. 쓴거다..아.. 이제야 모든 기억이 떠올랐다.. 지금까지 봤던 기억들은..내 것이었다..')
+    printMessage('이 일기를 보게 될 나에게..?\n이것은.. 내가 쓴거다.. 아.. 이제야 모든 기억이 떠올랐다..\n지금까지 봤던 기억들은.. 모두 내 것이었다..')
 pathfinal.mirror.show()
 }
 //기억 3 함수 &&배치 완료
