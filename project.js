@@ -205,6 +205,8 @@ Item.member('isHanded', function(){
 //----방 생성----//
 start = new Room('start', '검은방.png')
 corridor1 = new Room('corridor1', '복도-1.jpg')
+corridor2 = new Room('corridor2', '복도-2.jpg')
+corridor3 = new Room('corridor3', '복도-3.png')
 start_next = new Room('start_next', '방-2.jpg')
 basement1 = new Room('basement1', '지하실-1.png')
 basement2 = new Room('basement2', '지하실-2.png')
@@ -219,16 +221,58 @@ start.Left.locate(40, 360)
 
 // 흑염소 박제
 start.goat = new Object(start, 'goat', '흑염소2.png')
-start.goat.resize(85)
+start.goat.resize(90)
 start.goat.locate(980, 80)
+start.goat.lock()
+start.goat.onClick = function(){
+	if(!start_next.gemstone.isPicked() && this.id.isLocked()){
+		printMessage('흑염소로 만든 박제인거 같다\n눈빛이 왠지 기분 나쁘다')
+	} else if(start_next.gemstone.isPicked() && this.id.isLocked()){
+		printMessage('흑염소의 머리와 함께 무언가가 같이 떨어졌다')
+		this.id.unlock()
+		this.id.setSprite('흑염소2_.png')
+		start.goathead.show()
+		start.head.show()
+	} else if(!this.id.isLocked()){
+		printMessage('머리 부분이 떨어지고 몸통 부분만이 남아있다')
+	}
+}
+
+start.goathead = new Object(start, 'goathead', '흑염소3.png')
+start.goathead.resize(105)
+start.goathead.locate(865, 210)
+start.goathead.hide()
+start.goathead.onClick = function(){
+	printMessage('흑염소 박제의 머리 부분이다')
+}
+
+start.head = new Item(start, 'head', '머리.png')
+start.head.resize(64)
+start.head.locate(936, 254)
+start.head.hide()
+start.head.onClick = function(){
+	this.id.pick()
+}
+
+// 상자 - 레버 손잡이
+start.box = new Object(start, 'box', 'Box(Closed).png')
+start.box.resize(130)
+start.box.locate(1050, 300)
+start.box.onClick = function(){
+	this.id.setSprite('Box(Opened).png')
+	start.leverhandle.show()
+}
 
 // 레버 손잡이
 start.leverhandle = new Item(start, 'leverhandle', '레버 손잡이.png')
 start.leverhandle.resize(7)
-start.leverhandle.locate(840, 320)
+start.leverhandle.locate(1050, 300)
+start.leverhandle.hide()
 start.leverhandle.onClick = function(){
 	this.id.pick()
 }
+
+
 
 
 //----복도1----//
@@ -240,11 +284,28 @@ corridor1.door2 = new Direction(corridor1, 'door2', '투명.png', start_next)
 corridor1.door2.resize(120)
 corridor1.door2.locate(410, 380)
 
+corridor1.Right = new Arrow(corridor1, 'Right', corridor2)
+corridor1.Right.locate(1240, 360)
 
+//----복도2----//
+corridor2.door = new Direction(corridor2, 'door', '투명.png', corridor3)
+corridor2.door.resize(200)
+corridor2.door.locate(642, 480)
+// corridor2.door.lock()
+corridor2.door.onClick = function(){
+	/* if(~.key.isHanded() && this.id.isLocked()){
+		this.id.unlock()
+	} */
+	printMessage('밀어도 열리지 않는다\n잠겨 있는 것 같다')
+	Game.move(this.connectedTo)
+}
 
+corridor2.Down = new Arrow(corridor2, 'Down', corridor1)
+corridor2.Down.locate(642, 680)
 
-
-
+//----복도3----//
+corridor3.Down = new Arrow(corridor3, 'Down', corridor2)
+corridor3.Down.locate(640, 680)
 
 
 //----두번째 방----//
@@ -289,7 +350,6 @@ start_next.table.onClick = function(){
 	}
 }
 
-
 // 레버 받침
 start_next.lever = new Object(start_next, 'lever', '레버 받침.png')
 start_next.lever.resize(110)
@@ -326,7 +386,7 @@ start_next.box = new Object(start_next, 'box', '비밀상자2.png')
 start_next.box.resize(90)
 start_next.box.locate(1030, 340)
 start_next.box.onClick = function(){
-	showKeypad('alphabet', 'WATER', function(){
+	showKeypad('alphabet', 'AAAAB', function(){
 		printMessage('(딸깍)')
 		start_next.box.setSprite('비밀상자2_.png')
 		start_next.gemstone.show()
@@ -379,7 +439,7 @@ basement2.Left = new Arrow(basement2, 'Left', basement1)
 basement2.Left.locate(40, 360)
 
 // 시체0 - 팔 0 다리 0, 거울 생성
-basement2.corpse0 = new Object(basement2, 'corpse0', '몸4.png')
+basement2.corpse0 = new Object(basement2, 'corpse0', '몸0.png')
 basement2.corpse0.resize(400)
 basement2.corpse0.locate(420, 550)
 basement2.corpse0.onClick = function(){
@@ -389,7 +449,7 @@ basement2.corpse0.onClick = function(){
 }
 
 // 시체1 - 팔 0 다리 0
-basement2.corpse1 = new Object(basement2, 'corpse1', '몸4.png')
+basement2.corpse1 = new Object(basement2, 'corpse1', '몸0.png')
 basement2.corpse1.resize(400)
 basement2.corpse1.locate(420, 550)
 basement2.corpse1.hide()
@@ -406,6 +466,19 @@ basement2.mirror = new Object(basement2, 'mirror', '거울.png')
 basement2.mirror.resize(200)
 basement2.mirror.locate(1150, 340)
 basement2.mirror.hide()
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
