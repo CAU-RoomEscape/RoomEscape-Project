@@ -23,6 +23,15 @@ Game.move = function(room){
 Game.handItem = function(){
 	return game.getHandItem()
 }
+Game.over = function(){
+	game.gameover()
+}
+
+
+// Combination 정의 
+Game.makeCombination = function(object1,object2,object3){
+	game.makeCombination(object1.id,object2.id,object3.id)
+}
 
 // Room 정의
 function Room(name, background){
@@ -295,11 +304,13 @@ corridor2.door1.locate(642, 480)
 corridor2.door1.onClick = function(){
     printMessage('문에 가까이 다가가려 하자 정신이 아득해진다\n더이상 가면 안될거 같다')
     this.id.hide()
+    corridor2.door2.show()
 }
 
 corridor2.door2 = new Object(corridor2, 'door2', '투명.png')
 corridor2.door2.resize(200)
 corridor2.door2.locate(642, 480)
+corridor2.door2.hide()
 corridor2.door2.onClick = function(){
     printMessage('그만 정신을 잃고 말았다...')
     Game.over()
@@ -321,8 +332,9 @@ corridor2.Down.onClick = function(){
     if(corridor2.door3.isLocked()){
         corridor2.door1.show()
         corridor2.door2.hide()
+        Game.move(this.connectedTo)
     } else if(!corridor2.door3.isLocked()){
-        // nothing
+        Game.move(this.connectedTo)
     }
 }
 
@@ -409,7 +421,7 @@ start_next.box = new Object(start_next, 'box', '비밀상자2.png')
 start_next.box.resize(90)
 start_next.box.locate(1030, 340)
 start_next.box.onClick = function(){
-	showKeypad('alphabet', 'AAAAB', function(){
+	showKeypad('alphabet', 'WATER', function(){
 		printMessage('(딸깍)')
 		start_next.box.setSprite('비밀상자2_.png')
 		start_next.gemstone.show()
@@ -467,7 +479,7 @@ basement2.corpse0.resize(400)
 basement2.corpse0.locate(420, 550)
 basement2.corpse0.onClick = function(){
 	printMessage('으악!!.. 너무 끔찍하다.. 시체의 팔다리가 없다\n그나저나 이 사람 어딘가 낯이 익은데..')
-	basement2.corpse0.hide()
+	this.id.hide()
 	basement2.corpse1.show()
 }
 
@@ -490,7 +502,7 @@ basement2.corpse2 = new Direction(basement2, 'corpse2', '몸1.png', ceiling)
 basement2.corpse2.resize(400)
 basement2.corpse2.locate(420, 550)
 basement2.corpse2.hide()
-basement2.corpse2.onClick() = function(){
+basement2.corpse2.onClick = function(){
     printMessage('갑자기 등이 차갑다.. 눈앞이 어두컴컴하다')
     this.id.hide()
     Game.move(this.connectedTo)
