@@ -36,7 +36,7 @@ Game.end = function(){
 
 Game.move = function(room){
 
-	game.move(room.id)	
+	game.move(room.id)
 
 }
 
@@ -533,7 +533,7 @@ Mroom1.box1.onClick=function(){
     }
 }
 
-//잠겨있는 문 
+//잠겨있는 문
 Mroom1.text=new Object(Mroom1,'text','마우스.png')
 Mroom1.text.resize(200)
 Mroom1.text.locate(650,350)
@@ -569,7 +569,7 @@ Mroom1.box2.onClick=function(){
         showKeypad("number", "1457" , function(){ // 키패드 1 - 숫자4자리
             printMessage("열렸다!!")
             Mroom1.box2.open();
-            
+
 
      })}
      else if(Mroom1.box2.isOpened()){
@@ -579,7 +579,7 @@ Mroom1.box2.onClick=function(){
      }
 }
 
-//손잡이 생성 
+//손잡이 생성
 Mroom1.handle=new Item(Mroom1,'handle','손잡이.png')
 Mroom1.handle.resize(800)
 Mroom1.handle.locate(540,350)
@@ -631,9 +631,6 @@ Mroom2.head.locate(1050,650)
 Mroom3.painting=new Object(Mroom3,'painting','마우스.png')
 Mroom3.painting.resize(80)
 Mroom3.painting.locate(270,350)
-Mroom3.painting.onClick = function(){
-    printMessage("그림이 조금 찢어져있다.")
-}
 
 Mroom3.Mpainting1=new Direction(Mroom3,'Mpainting1','마우스.png',Mpainting1)
 Mroom3.Mpainting1.resize(80)
@@ -642,8 +639,11 @@ Mroom3.Mpainting1.hide()
 
 Mroom3.painting.onClick = function(){
     if(Mroom2F.paper.isHanded()){
+		printMessage("찢어진 부분에 딱 맞았다.")
 		Mroom3.Mpainting1.show()
 		Mroom3.painting.hide()
+	}	else {
+		printMessage("그림이 조금 찢어져있다.")
 	}
 }
 
