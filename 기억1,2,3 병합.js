@@ -507,6 +507,18 @@ Mroom4.dirU=new Direction(Mroom4,'dirU','마우스.png',Mroom4U)
 Mroom4.dirU.resize(100)
 Mroom4.dirU.locate(220,80)
 
+Mroom4.dirU1=new Direction(Mroom4,'dirU1','마우스.png',Mroom4U)
+Mroom4.dirU1.resize(150)
+Mroom4.dirU1.locate(220,150)
+
+Mroom4.dirU2=new Direction(Mroom4,'dirU2','마우스.png',Mroom4U)
+Mroom4.dirU2.resize(150)
+Mroom4.dirU2.locate(220,250)
+
+Mroom4.dirU3=new Direction(Mroom4,'dirU3','마우스.png',Mroom4U)
+Mroom4.dirU3.resize(150)
+Mroom4.dirU3.locate(220,350)
+
 //아래 방향 설정, 이동
 Mroom1U.dirD=new Direction(Mroom1U,'dirD','마우스.png',Mroom1)
 Mroom1U.dirD.resize(100)
@@ -741,7 +753,7 @@ Mroom2F.locker.onClick = function(){
     else{
         showImageViewer("box3.png","")
 			Mroom2F.paper.pick()
-			Mroom2F.paper1.pick()
+			Mroom2F.paper1.show()
 			printMessage("뭔가 적혀있는 종이와 그림 조각을 얻었다 \n Mroom3의 그림과 비슷하다!")
     }
 }
@@ -751,10 +763,13 @@ Mroom2F.paper.resize(150)
 Mroom2F.paper.locate(450,600)
 Mroom2F.paper.hide()
 
-Mroom2F.paper1=new Item(Mroom2F,'paper1','일기2.png')
-Mroom2F.paper1.resize(150)
-Mroom2F.paper1.locate(450,600)
+Mroom2F.paper1=new Object(Mroom2F,'paper1','일기2.png')
+Mroom2F.paper1.resize(50)
+Mroom2F.paper1.locate(550,680)
 Mroom2F.paper1.hide()
+Mroom2F.paper1.onClick = function(){
+	showImageViewer("일기2.png","")
+}
 
 
 
