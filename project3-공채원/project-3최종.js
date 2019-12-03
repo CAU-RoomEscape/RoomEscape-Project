@@ -846,7 +846,10 @@ room2.moldy=new openclose(room2,'moldy','틀-노랑.png','틀완성-노랑.png')
 room2.moldy.resize(100)
 room2.moldy.locate(780,330)
 room2.moldy.lock()
-//틀 배치
+//틀 배치ㅣ
+
+
+
 
 room2.angel1=new Object(room2,'angel1','천사-왼쪽.png')
 room2.angel1.resize(300)

@@ -597,7 +597,7 @@ dining3.cryptex=new Object(dining3,'cryptex','cryptex.png')
 dining3.cryptex.resize(80)
 dining3.cryptex.locate(380,80)
 dining3.cryptex.onClick=function(){
-	showKeypad('alphabet','AAAAA',function(){
+	showKeypad('alphabet','RILEY',function(){
 		dining3.door.unlock()
 dining3.door.setSprite('방1-문-열림.png')	
 printMessage('문이 열렸다.')
@@ -649,7 +649,7 @@ dining4.book=new Object(dining4,'book','책1-1.png')
 dining4.book.resize(150)
 dining4.book.locate(850,470)
 
-dining4.book1=new Object(dining4,'book1','책.png')
+dining4.book1=new Object(dining4,'book1','책a.png')
 dining4.book1.resize(150)
 dining4.book1.locate(800,580)
 dining4.book1.onClick=function(){
@@ -919,6 +919,14 @@ room2.transparent.resize(100)
 room2.transparent.locate(640,250)
 room2.transparent.show()
 
+room2.paper=new Object(room2,'paper','종이-힌트.png')
+room2.paper.resize(50)
+room2.paper.locate(800,600)
+
+room2.paper.onClick=function(){
+    showImageViewer('종이-힌트2.png')
+    printMessage('중요한 날..? 기억해 둬야 겠다.')
+}
 
 //기억3이랑 합칠때 여기를 이용
 room2.totheForest=new Object(room2,'totheForest','숲으로가는 사진.png')
@@ -938,7 +946,7 @@ if(room2.moldg.isOpened()&&room2.moldb.isOpened()&&room2.moldr.isOpened()&&room2
 //this.id.setSprite(this.openedImage)
     printMessage('큐브를 모두 꽂으니 사진이 나타났다..! 아까처럼 새로운 공간으로 이동할 수 있을까..?')
 }
-else{}
+else{printMessage('여기 뭔가 걸려있었던 흔적이 있다..')}
 }
 
 //화살표
