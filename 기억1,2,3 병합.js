@@ -1,4 +1,3 @@
-//----함수 정의----//
 
 Function.prototype.member = function(name, value){
 
@@ -44,6 +43,12 @@ Game.handItem = function(){
 
 	return game.getHandItem()
 
+}
+
+
+//추가
+Game.makeCombination = function(object1,object2,object3){
+	game.makeCombination(object1.id,object2.id,object3.id)
 }
 
 
@@ -414,22 +419,370 @@ Item.member('isHanded', function(){
 
 })
 
-
 //-------------------------------------------------------함수생성 완료
-room=new Room('room','기억3시작.jpg')
+
+// 방생성
+Mroom1=new Room('Mroom1','room1.png')
+Mroom2=new Room('Mroom2','room2.png')
+Mroom3=new Room('Mroom3','room3.png')
+Mroom4=new Room('Mroom4','room4.png')
+Mroom1U=new Room('Mroom1U','room1U.png')
+Mroom3U=new Room('Mroom3U','room3U.png')
+Mroom4U=new Room('Mroom4U','room4U.png')
+Mroom2F=new Room('Mroom2F','2floor.png')
+Mbook=new Room('Mbook','책속.png')
+Mbook1=new Room('Mbook1','책속1.png')
+Mbook2=new Room('Mbook2','책속2.png')
+Mpainting1=new Room('Mpainting1','그림속.png')
+Mpainting2=new Room('Mpainting2','그림속1.png')
+
+
+//책속으로 입장, 이동
+Mbook.inside=new Direction(Mbook,'inside','마우스.png',Mbook1)
+Mbook.inside.resize(600)
+Mbook.inside.locate(880,430)
+
+Mbook1.inside=new Direction(Mbook1,'inside','마우스.png',Mbook2)
+Mbook1.inside.resize(800)
+Mbook1.inside.locate(800,430)
+
+Mbook2.inside=new Direction(Mbook2,'inside','마우스.png',Mroom1U)
+Mbook2.inside.resize(800)
+Mbook2.inside.locate(800,430)
+
+//그림속으로 이동
+Mpainting1.inside=new Direction(Mpainting1,'inside','마우스.png',Mpainting2)
+Mpainting1.inside.resize(800)
+Mpainting1.inside.locate(600,430)
+
+//오른쪽 이동, 이동
+Mroom1.dirR=new Direction(Mroom1,'dirR','마우스.png',Mroom2)
+Mroom1.dirR.resize(100)
+Mroom1.dirR.locate(1200,430)
+
+Mroom2.dirR=new Direction(Mroom2,'dirR','마우스.png',Mroom3)
+Mroom2.dirR.resize(100)
+Mroom2.dirR.locate(1200,430)
+
+Mroom3.dirR=new Direction(Mroom3,'dirR','마우스.png',Mroom4)
+Mroom3.dirR.resize(100)
+Mroom3.dirR.locate(1200,430)
+
+Mroom4.dirR=new Direction(Mroom4,'dirR','마우스.png',Mroom1)
+Mroom4.dirR.resize(100)
+Mroom4.dirR.locate(1200,430)
+
+//왼쪽 방향, 이동
+
+Mroom1.dirL=new Direction(Mroom1,'dirL','마우스.png',Mroom4)
+Mroom1.dirL.resize(100)
+Mroom1.dirL.locate(100,430)
+
+Mroom4.dirL=new Direction(Mroom4,'dirL','마우스.png',Mroom3)
+Mroom4.dirL.resize(100)
+Mroom4.dirL.locate(100,430)
+
+Mroom3.dirL=new Direction(Mroom3,'dirL','마우스.png',Mroom2)
+Mroom3.dirL.resize(100)
+Mroom3.dirL.locate(100,430)
+
+Mroom2.dirL=new Direction(Mroom2,'dirL','마우스.png',Mroom1)
+Mroom2.dirL.resize(100)
+Mroom2.dirL.locate(100,430)
+
+Mroom2F.dirL=new Direction(Mroom2F,'dirL','마우스.png',Mroom4U)
+Mroom2F.dirL.resize(100)
+Mroom2F.dirL.locate(100,430)
+
+//윗 방향 설정, 이동
+Mroom1.dirU=new Direction(Mroom1,'dirU','마우스.png',Mroom1U)
+Mroom1.dirU.resize(100)
+Mroom1.dirU.locate(650,80)
+
+Mroom3.dirU=new Direction(Mroom3,'dirU','마우스.png',Mroom3U)
+Mroom3.dirU.resize(100)
+Mroom3.dirU.locate(650,80)
+
+Mroom4.dirU=new Direction(Mroom4,'dirU','마우스.png',Mroom4U)
+Mroom4.dirU.resize(100)
+Mroom4.dirU.locate(220,80)
+
+//아래 방향 설정, 이동
+Mroom1U.dirD=new Direction(Mroom1U,'dirD','마우스.png',Mroom1)
+Mroom1U.dirD.resize(100)
+Mroom1U.dirD.locate(100,600)
+
+Mroom3U.dirD=new Direction(Mroom3U,'dirD','마우스.png',Mroom3)
+Mroom3U.dirD.resize(100)
+Mroom3U.dirD.locate(100,600)
+
+Mroom4U.dirD=new Direction(Mroom4U,'dirD','마우스.png',Mroom4)
+Mroom4U.dirD.resize(100)
+Mroom4U.dirD.locate(100,600)
+
+//box1 생성
+Mroom1.box1=new Object(Mroom1,'box1','마우스.png')
+Mroom1.box1.resize(50)
+Mroom1.box1.locate(320,380)
+Mroom1.box1.onClick=function(){
+    if(Mroom4.key1.isHanded()){
+        showImageViewer("box1.png","")
+        printMessage("열렸다.")
+    }
+    else{
+        printMessage("잠겨있다.")
+    }
+}
+
+//잠겨있는 문 
+Mroom1.text=new Object(Mroom1,'text','마우스.png')
+Mroom1.text.resize(200)
+Mroom1.text.locate(650,350)
+Mroom1.text.onClick=function(){
+	printMessage("문은 자물쇠로 잠겨있다.")
+}
+
+// 전등
+Mroom1.text1=new Object(Mroom1,'text1','마우스.png')
+Mroom1.text1.resize(100)
+Mroom1.text1.locate(1050,125)
+Mroom1.text1.onClick=function(){
+	printMessage("불이 켜진 것도 있고.. 꺼진 것도 있고.. ")
+}
+
+// 얼룩
+Mroom1.text2=new Object(Mroom1,'text2','마우스.png')
+Mroom1.text2.resize(100)
+Mroom1.text2.locate(1050,600)
+Mroom1.text2.onClick=function(){
+	printMessage("검붉은 얼룩이 묻어있다..")
+}
+
+
+//box2 생성
+Mroom1.box2=new Object(Mroom1,'box2','마우스.png')
+Mroom1.box2.resize(100)
+Mroom1.box2.locate(1000,380)
+Mroom1.box2.close()
+Mroom1.box2.onClick=function(){
+    if(Mroom1.box2.isClosed()){
+        printMessage("잠겨있다.")
+        showKeypad("number", "1457" , function(){ // 키패드 1 - 숫자4자리
+            printMessage("열렸다!!")
+            Mroom1.box2.open();
+            
+
+     })}
+     else if(Mroom1.box2.isOpened()){
+        showImageViewer("box2.png","")
+        Mroom1.handle.pick();
+        printMessage("안에서 드라이버 손잡이를 주웠다.")
+     }
+}
+
+//손잡이 생성 
+Mroom1.handle=new Item(Mroom1,'handle','손잡이.png')
+Mroom1.handle.resize(800)
+Mroom1.handle.locate(540,350)
+Mroom1.handle.hide()
+
+
+
+//Mroom1U 표시 보기
+Mroom1U.markR1U=new Object(Mroom1U,'markR1U','마우스.png')
+Mroom1U.markR1U.resize(100)
+Mroom1U.markR1U.locate(370,150)
+
+Mroom1U.markR1U.onClick = function(){
+	if(Mroom2.scope.isHanded()){
+		showImageViewer("이미지.png","");
+	}
+	else {
+		printMessage("너무 멀어서 보이지 않는다..");
+	}
+}
+
+// 창밖
+Mroom1U.text=new Object(Mroom1U,'text','마우스.png')
+Mroom1U.text.resize(250)
+Mroom1U.text.locate(650,400)
+Mroom1U.text.onClick=function(){
+	printMessage("밖에는 눈이 내리고 있다..")
+}
+
+//쌍안경 생성
+Mroom2.scope=new Item(Mroom2,'scope','쌍안경.png')
+Mroom2.scope.resize(100)
+Mroom2.scope.locate(600,400)
+
+//그림 보기
+Mroom2.picture=new Object(Mroom2,'picture','마우스.png')
+Mroom2.picture.resize(100)
+Mroom2.picture.locate(615,260)
+Mroom2.picture.onClick =function(){
+    showImageViewer("그림.png");
+}
+
+//드라이버 앞부분 생성
+Mroom2.head=new Item(Mroom2,'head','앞부분.png')
+Mroom2.head.resize(60)
+Mroom2.head.locate(1050,650)
+
+//painting 통로
+Mroom3.painting=new Object(Mroom3,'painting','마우스.png')
+Mroom3.painting.resize(80)
+Mroom3.painting.locate(270,350)
+Mroom3.painting.onClick = function(){
+    printMessage("그림이 조금 찢어져있다.")
+}
+
+Mroom3.Mpainting1=new Direction(Mroom3,'Mpainting1','마우스.png',Mpainting1)
+Mroom3.Mpainting1.resize(80)
+Mroom3.Mpainting1.locate(270,350)
+Mroom3.Mpainting1.hide()
+
+Mroom3.painting.onClick = function(){
+    if(Mroom2F.paper.isHanded()){
+		Mroom3.Mpainting1.show()
+		Mroom3.painting.hide()
+	}
+}
+
+// 이상해 보이는 문
+Mroom3.text=new Object(Mroom3,'text','마우스.png')
+Mroom3.text.resize(200)
+Mroom3.text.locate(650,350)
+Mroom3.text.onClick=function(){
+	printMessage("문이 반대편에서 잠겨있는 듯하다.. \n작은 글씨로 '들어오지마 여보' 라고 적혀있다.")
+}
+
+//2층 발견
+Mroom3U.text=new Object(Mroom3U,'text','마우스.png')
+Mroom3U.text.resize(500)
+Mroom3U.text.locate(650,400)
+Mroom3U.text.onClick=function(){
+	printMessage("2층이 있다 사다리로 올라갈 수 있을 거 같은데..")
+}
+
+//책 생성
+Mroom4.MbookClo=new Object(Mroom4,'MbookClo','책.png')
+Mroom4.MbookClo.resize(100)
+Mroom4.MbookClo.locate(500,350)
+
+Mroom4.MbookClo.onClick = function(){
+    if(Mroom4.MbookClo.isClosed()){
+        printMessage("책은 잠겨있다.")
+        showKeypad("alphabet", "EFCBH" , function(){ // 키패드 1 - 숫자4자리
+            printMessage("책이 열렸다 !!")
+            Mroom4.MbookClo.setSprite("책open.png")
+            Mroom4.MbookClo.open();
+            Mroom4.key1.show();
+
+
+     });}
+    else{
+		showImageViewer("일기1.png","")
+	}
+}
+
+// 책안의 열쇠 생성
+Mroom4.key1=new Item(Mroom4,'key1','열쇠1.png')
+Mroom4.key1.resize(40)
+Mroom4.key1.locate(540,350)
+Mroom4.key1.hide()
+
+
+// 드라이버 조합
+Mroom4U.driver=new Item(Mroom4U,'driver','드라이버.png')
+Mroom4U.driver.resize(200)
+Mroom4U.driver.locate(200,350)
+Mroom4U.driver.hide()
+
+
+Game.makeCombination(Mroom1.handle,Mroom2.head,Mroom4U.driver)
+
+
+//2층문 생성
+Mroom4U.doorC=new Object(Mroom4U,'doorC','문close.png')
+Mroom4U.doorC.resize(460)
+Mroom4U.doorC.locate(640,260)
+
+Mroom4U.doorO=new Direction(Mroom4U,'doorO','문open.png',Mroom2F)
+Mroom4U.doorO.resize(460)
+Mroom4U.doorO.locate(640,260)
+Mroom4U.doorO.hide()
+
+Mroom4U.doorC.onClick = function(){
+    if (Mroom4U.driver.isHanded()){
+        Mroom4U.doorC.setSprite("문open.png");
+        printMessage("문이 열렸다.")
+        Mroom4U.doorC.hide();
+        Mroom4U.doorO.show()
+    }
+    else{
+        printMessage("나사가 조여져있다.")
+    }
+}
+
+
+//2층 금고
+Mroom2F.locker=new Object(Mroom2F,'locker','마우스.png')
+Mroom2F.locker.resize(150)
+Mroom2F.locker.locate(450,600)
+
+Mroom2F.locker.onClick = function(){
+    if(Mroom2F.locker.isClosed()){
+        printMessage("암호가 걸려있다.")
+        showKeypad("number","1323",function(){
+            Mroom2F.locker.open();
+            printMessage("금고가 열렸다.");
+        })
+    }
+    else{
+        showImageViewer("box3.png","")
+			Mroom2F.paper.pick()
+			Mroom2F.paper1.pick()
+			printMessage("뭔가 적혀있는 종이와 그림 조각을 얻었다 \n Mroom3의 그림과 비슷하다!")
+    }
+}
+
+Mroom2F.paper=new Item(Mroom2F,'paper','종이조각.png')
+Mroom2F.paper.resize(150)
+Mroom2F.paper.locate(450,600)
+Mroom2F.paper.hide()
+
+Mroom2F.paper1=new Item(Mroom2F,'paper1','일기2.png')
+Mroom2F.paper1.resize(150)
+Mroom2F.paper1.locate(450,600)
+Mroom2F.paper1.hide()
+
+
+
+//기억1-------------------------------------------------------------------
+Mroom=new Room('Mroom','기억3시작.jpg')
 Bigdoor=new Room('Bigdoor','오두막-문.png')
 dining1=new Room('dining1','거실1.png')
 dining2=new Room('dining2','거실2-완성.png')
 dining3=new Room('dining3','거실1.png')
 dining4=new Room('dining4','거실2.png')
 Mroom5=new Room('Mroom5','방11.png')
-room2=new Room('room2','방2.png')
+Mroom6=new Room('Mroom6','방2.png')
 attic=new Room('attic','다락방.png')
 hiddenroom=new Room('hiddenroom','숨겨진.jpg')
 //------------------------------------------------------------방 생성
-room.arrow=new Direction(room,'arrow','화살표-위.png',Bigdoor)
-room.arrow.resize(50)
-room.arrow.locate(620,680)
+Mroom.arrow=new Direction(Mroom,'arrow','화살표-위.png',Bigdoor)
+Mroom.arrow.resize(50)
+Mroom.arrow.locate(620,680)
+
+//기억1에서 기억2로 이동
+Mpainting2.inside=new Direction(Mpainting2,'inside','마우스.png',Mroom)
+Mpainting2.inside.resize(800)
+Mpainting2.inside.locate(600,430)
+
+Mpainting2.inside.onClick=function(){
+    Game.move(this.connectedTo)
+    printMessage('뭐지..?? 방금 전에 그림에서 보았던 곳과 같은 곳이다. 여기에 어떻게 들어온거지...?')
+}
 
 //기억2 방생성
 pathstart=new Room('pathstart','숲배경-양쪽길.png')//시작 길
@@ -465,7 +818,7 @@ Bigdoor.plant=new Object(Bigdoor,'plant','화분.png')
 Bigdoor.plant.resize(250)
 Bigdoor.plant.locate(1000,560)//화분 생성
 
-Bigdoor.arrow=new Direction(Bigdoor,'arrow','화살표-아래.png',room)
+Bigdoor.arrow=new Direction(Bigdoor,'arrow','화살표-아래.png',Mroom)
 Bigdoor.arrow.resize(50)
 Bigdoor.arrow.locate(620,680)
 
@@ -549,10 +902,10 @@ dining1.keypad.onClick=function(){
 }
 //사다리 등장-다락방으로 이동
 
-dining1.key1=new Item(dining1,'key1','열쇠3.png')
-dining1.key1.resize(80)
-dining1.key1.locate(870,190)
-dining1.key1.hide()//열쇠 배치
+dining1.keyy=new Item(dining1,'keyy','열쇠3.png')
+dining1.keyy.resize(80)
+dining1.keyy.locate(870,190)
+dining1.keyy.hide()//열쇠 배치
 //거실1 배치 완료
 dining2.match=new Item(dining2,'match','성냥.png')
 dining2.match.resize(80)
@@ -647,7 +1000,7 @@ dining4.crack.resize(300)
 dining4.crack.locate(300,235)
 dining4.crack.lock()
 //크랙 배치 완료
-dining4.arrow2=new Direction(dining4,'arrow2','화살표-위.png',room2)
+dining4.arrow2=new Direction(dining4,'arrow2','화살표-위.png',Mroom6)
 dining4.arrow2.resize(50)
 dining4.arrow2.locate(370,300)
 dining4.arrow2.hide()
@@ -697,7 +1050,7 @@ dining1.fireplace.onClick=function(){
 		this.id.setSprite(this.openedImage)
 		this.id.unlock()
 		dining1.wax.setSprite('밀랍인형-녹음.png')
-		dining1.key1.show()
+		dining1.keyy.show()
 		printMessage('성냥으로 벽난로에 불을 붙였더니 그 위의 밀랍인형이 녹았다.')
 	}
 	else if(!dining2.match.isHanded())
@@ -742,26 +1095,26 @@ Mroom5.head.locate(265,600)
 Mroom5.head.hide()
 
 Mroom5.chest.onClick=function(){
-    if(dining1.key1.isHanded()){
+    if(dining1.keyy.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.unlock()
         Mroom5.head.show()
         printMessage('상자가 열렸다! 이건 또 어디에 쓸 수  있을까?')
         
     }
-    else if(!dining1.key1.isHanded()){
+    else if(!dining1.keyy.isHanded()){
         printMessage('상자가 잠겨 있다... 이것도 자물쇠가 필요할까?')
     }
 }
 //방1 배치 완료
-room2.arrow=new Direction(room2,'arrow','화살표-아래.png',dining4)
-room2.arrow.resize(50)
-room2.arrow.locate(640,680)
+Mroom6.arrow=new Direction(Mroom6,'arrow','화살표-아래.png',dining4)
+Mroom6.arrow.resize(50)
+Mroom6.arrow.locate(640,680)
 
-room2.key2=new Item(room2,'key2','열쇠4.png')
-room2.key2.resize(150)
-room2.key2.locate(400,600)
-room2.key2.onClick=function(){
+Mroom6.key2=new Item(Mroom6,'key2','열쇠4.png')
+Mroom6.key2.resize(150)
+Mroom6.key2.locate(400,600)
+Mroom6.key2.onClick=function(){
     printMessage('열쇠를 얻었다.')
     this.id.pick()
 }
@@ -805,25 +1158,25 @@ attic.water.locate(100,510)
 attic.water.hide()
 
 attic.chest.onClick=function(){
-    if(room2.key2.isHanded()){
+    if(Mroom6.key2.isHanded()){
       {  this.id.unlock()
             this.id.setSprite(this.openedImage)}
             printMessage('상자가 열렸다! 웬 물병이 들어있다.')
             attic.water.show()
     }
-    else if(!room2.key2.isHanded())
+    else if(!Mroom6.key2.isHanded())
     printMessage('상자가 잠겨있는 것 같다.. 비슷한 상자가 있었던 것 같은데..?')
 }
 
 //다락방 배치 완료
 dining4.chest.onClick=function(){
-    if(room2.key2.isHanded()){
+    if(Mroom6.key2.isHanded()){
       {  this.id.unlock()
             this.id.setSprite(this.openedImage)}
             printMessage('상자가 열렸다! 그런데 이 신기하게 생긴 물체는 뭐지..?')
             dining4.cube1.show()
     }
-    else if(!room2.key2.isHanded())
+    else if(!Mroom6.key2.isHanded())
     printMessage('상자가 잠겨있는 것 같다.. 열쇠로 열어야 하나??')
 }
 
@@ -842,49 +1195,49 @@ dining2.plant1.onClick=function(){
         printMessage('화분이 놓여 있다.')
     }
 }
-hiddenroom.arrow=new Direction(hiddenroom,'arrow','화살표-아래.png',room2)
+hiddenroom.arrow=new Direction(hiddenroom,'arrow','화살표-아래.png',Mroom6)
 hiddenroom.arrow.resize(50)
 hiddenroom.arrow.locate(640,680)
 
 //공략
-room2.moldr=new openclose(room2,'moldr','틀-빨강.png','틀완성-빨강.png')
-room2.moldr.resize(100)
-room2.moldr.locate(500,170)
-room2.moldr.lock()
+Mroom6.moldr=new openclose(Mroom6,'moldr','틀-빨강.png','틀완성-빨강.png')
+Mroom6.moldr.resize(100)
+Mroom6.moldr.locate(500,170)
+Mroom6.moldr.lock()
 
-room2.moldb=new openclose(room2,'moldb','틀-파랑.png','틀완성-파랑.png')
-room2.moldb.resize(100)
-room2.moldb.locate(780,170)
-room2.moldb.lock()
+Mroom6.moldb=new openclose(Mroom6,'moldb','틀-파랑.png','틀완성-파랑.png')
+Mroom6.moldb.resize(100)
+Mroom6.moldb.locate(780,170)
+Mroom6.moldb.lock()
 
-room2.moldg=new openclose(room2,'moldg','틀-초록.png','틀완성-초록.png')
-room2.moldg.resize(100)
-room2.moldg.locate(500,330)
-room2.moldg.lock()
+Mroom6.moldg=new openclose(Mroom6,'moldg','틀-초록.png','틀완성-초록.png')
+Mroom6.moldg.resize(100)
+Mroom6.moldg.locate(500,330)
+Mroom6.moldg.lock()
 
-room2.moldy=new openclose(room2,'moldy','틀-노랑.png','틀완성-노랑.png')
-room2.moldy.resize(100)
-room2.moldy.locate(780,330)
-room2.moldy.lock()
+Mroom6.moldy=new openclose(Mroom6,'moldy','틀-노랑.png','틀완성-노랑.png')
+Mroom6.moldy.resize(100)
+Mroom6.moldy.locate(780,330)
+Mroom6.moldy.lock()
 //틀 배치
 
-room2.angel1=new Object(room2,'angel1','천사-왼쪽.png')
-room2.angel1.resize(300)
-room2.angel1.locate(200,500)
+Mroom6.angel1=new Object(Mroom6,'angel1','천사-왼쪽.png')
+Mroom6.angel1.resize(300)
+Mroom6.angel1.locate(200,500)
 
-room2.angel2=new Object(room2,'angel2','천사-오른쪽.png')
-room2.angel2.resize(300)
-room2.angel2.locate(1080,500)
+Mroom6.angel2=new Object(Mroom6,'angel2','천사-오른쪽.png')
+Mroom6.angel2.resize(300)
+Mroom6.angel2.locate(1080,500)
 
-room2.angel1.onClick=function(){
+Mroom6.angel1.onClick=function(){
     printMessage('천사상이 놓여있다..')
 }
 
-room2.angel2.onClick=function(){
+Mroom6.angel2.onClick=function(){
     printMessage('천사상이 놓여있다..')
 }
 
-room2.moldr.onClick=function(){
+Mroom6.moldr.onClick=function(){
     if(dining4.cube1.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
@@ -895,7 +1248,7 @@ room2.moldr.onClick=function(){
     }
 }//큐브 1
 
-room2.moldb.onClick=function(){
+Mroom6.moldb.onClick=function(){
     if(dining2.cube2.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
@@ -905,7 +1258,7 @@ room2.moldb.onClick=function(){
         printMessage('무언가 넣을 수 있는 틀이다.')
     }
 }//큐브2
-room2.moldg.onClick=function(){
+Mroom6.moldg.onClick=function(){
     if(Mroom5.cube3.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
@@ -916,7 +1269,7 @@ room2.moldg.onClick=function(){
     }
 }//큐브3
 
-room2.moldy.onClick=function(){
+Mroom6.moldy.onClick=function(){
     if(attic.cube4.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
@@ -929,41 +1282,41 @@ room2.moldy.onClick=function(){
 
 
 
-room2.arrow1=new Direction(room2,'arrow1','화살표-위.png',hiddenroom)
-room2.arrow1.resize(50)
-room2.arrow1.locate(640,500)
-room2.arrow1.hide()
+Mroom6.arrow1=new Direction(Mroom6,'arrow1','화살표-위.png',hiddenroom)
+Mroom6.arrow1.resize(50)
+Mroom6.arrow1.locate(640,500)
+Mroom6.arrow1.hide()
 
-room2.transparent=new Object(room2,'transparent','투명.png')
-room2.transparent.resize(100)
-room2.transparent.locate(640,250)
-room2.transparent.show()
+Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
+Mroom6.transparent.resize(100)
+Mroom6.transparent.locate(640,250)
+Mroom6.transparent.show()
 
-room2.paper=new Object(room2,'paper','종이-힌트.png')
-room2.paper.resize(80)
-room2.paper.locate(800,600)
+Mroom6.paper=new Object(Mroom6,'paper','종이-힌트.png')
+Mroom6.paper.resize(80)
+Mroom6.paper.locate(800,600)
 
-room2.paper.onClick=function(){
+Mroom6.paper.onClick=function(){
     showImageViewer('종이-힌트2.png')
     printMessage('중요한 날..? 기억해 둬야 겠다.')
 }
 
 //기억3이랑 합칠때 여기를 이용
-room2.totheForest=new Direction(room2,'totheForest','숲으로가는 사진.png',pathstart)
-room2.totheForest.resize(100)
-room2.totheForest.locate(640,250)
-room2.totheForest.hide()
-room2.totheForest.onClick=function(){
+Mroom6.totheForest=new Direction(Mroom6,'totheForest','숲으로가는 사진.png',pathstart)
+Mroom6.totheForest.resize(100)
+Mroom6.totheForest.locate(640,250)
+Mroom6.totheForest.hide()
+Mroom6.totheForest.onClick=function(){
     Game.move(this.connectedTo)
     printMessage('이번에도 사진을 통해 다른 공간으로 넘어왔다..!! 그런데 저 여자는 누구지..? 매우 낯이 익다..')
 }
 //기억 3이랑 합칠 때 direction으로 바꾸기
 
-room2.transparent.onClick=function(){
-if(room2.moldg.isOpened()&&room2.moldb.isOpened()&&room2.moldr.isOpened()&&room2.moldy.isOpened())
+Mroom6.transparent.onClick=function(){
+if(Mroom6.moldg.isOpened()&&Mroom6.moldb.isOpened()&&Mroom6.moldr.isOpened()&&Mroom6.moldy.isOpened())
 {
-    room2.transparent.hide()
-    room2.totheForest.show()
+    Mroom6.transparent.hide()
+    Mroom6.totheForest.show()
    
    // room2.totheForest.show()
     //room2.arrow1.show()
@@ -1256,14 +1609,15 @@ pathfinal.people.onClick=function(){
 
 man.diary.onClick=function(){
     showImageViewer('마지막 다이어리.png')
-    printMessage('이 일기를 보게 될 나에게..? 이것은.. 내가.. 쓴거다..아.. 이제야 모든 기억이 떠올랐다.. 지금까지 봤던 기억들은..')
+    printMessage('이 일기를 보게 될 나에게..? 이것은.. 내가.. 쓴거다..아.. 이제야 모든 기억이 떠올랐다.. 지금까지 봤던 기억들은..내 것이었다..')
 pathfinal.mirror.show()
 }
 //기억 3 함수 &&배치 완료
 //--------------------------------------------------------------------------------
-Game.start(room,'뭐지..?? 방금 전에 그림에서 보았던 곳과 같은 곳이다. 여기에 어떻게 들어온거지...?')
+//Game.start(Mroom,'뭐지..?? 방금 전에 그림에서 보았던 곳과 같은 곳이다. 여기에 어떻게 들어온거지...?')
 
 
+Game.start(Mbook,'환영합니다.')
 
 
 
