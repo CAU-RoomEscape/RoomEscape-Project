@@ -135,9 +135,11 @@ function Arrow(room, name, connectedTo){
 	} else if(name == 'Down'){
 		Direction.call(this, room, name, '화살표-아래.png', connectedTo)
 	}
+  this.resize(50)
 }
 
 Arrow.prototype = new Direction() // Direction 상속
+
 Arrow.member('onClick', function(){
 	Game.move(this.connectedTo)
 })
@@ -213,12 +215,21 @@ mirrorR = new Room('mirror', '거울속_.png')
 
 // 화살표->복도
 start.Left = new Arrow(start, 'Left', corridor1)
-start.Left.resize(40)
 start.Left.locate(40, 360)
 
+// 흑염소 박제
 start.goat = new Object(start, 'goat', '흑염소2.png')
 start.goat.resize(85)
 start.goat.locate(980, 80)
+
+// 레버 손잡이
+start.leverhandle = new Item(start, 'leverhandle', '레버 손잡이.png')
+start.leverhandle.resize(7)
+start.leverhandle.locate(840, 320)
+start.leverhandle.onClick = function(){
+	this.id.pick()
+}
+
 
 //----복도1----//
 corridor1.door1 = new Direction(corridor1, 'door1', '투명.png', start)
@@ -278,20 +289,13 @@ start_next.table.onClick = function(){
 	}
 }
 
-// 레버 손잡이
-start_next.leverhandle = new Item(start_next, 'leverhandle', '레버 손잡이.png')
-start_next.leverhandle.resize(7)
-start_next.leverhandle.locate(840, 320)
-start_next.leverhandle.onClick = function(){
-	this.id.pick()
-}
 
 // 레버 받침
 start_next.lever = new Object(start_next, 'lever', '레버 받침.png')
 start_next.lever.resize(110)
 start_next.lever.locate(260, 550)
 start_next.lever.onClick = function(){
-	if(start_next.leverhandle.isHanded()){
+	if(start.leverhandle.isHanded()){
 		printMessage('손잡이를 꽂아 넣었다')
 		this.id.hide()
 		start_next.leverL.show()
@@ -360,11 +364,9 @@ start_next.papers.onClick = function(){
 
 //----지하실 입구----//
 basement1.Up = new Arrow(basement1, 'Up', start_next)
-basement1.Up.resize(40)
 basement1.Up.locate(290, 320)
 
 basement1.Right = new Arrow(basement1, 'Right', basement2)
-basement1.Right.resize(40)
 basement1.Right.locate(1240, 360)
 
 
@@ -374,28 +376,37 @@ basement1.Right.locate(1240, 360)
 
 // 화살표->지하실 입구
 basement2.Left = new Arrow(basement2, 'Left', basement1)
-basement2.Left.resize(40)
 basement2.Left.locate(40, 360)
+
+// 시체0 - 팔 0 다리 0, 거울 생성
+basement2.corpse0 = new Object(basement2, 'corpse0', '몸4.png')
+basement2.corpse0.resize(400)
+basement2.corpse0.locate(420, 550)
+basement2.corpse0.onClick = function(){
+	printMessage('으악!!.. 너무 끔찍하다.. 시체의 팔다리가 없다\n그나저나 이 사람 어딘가 낯이 익은데..')
+	basement2.corpse0.hide()
+	basement2.corpse1.show()
+}
 
 // 시체1 - 팔 0 다리 0
 basement2.corpse1 = new Object(basement2, 'corpse1', '몸4.png')
 basement2.corpse1.resize(400)
 basement2.corpse1.locate(420, 550)
+basement2.corpse1.hide()
 basement2.corpse1.onClick = function(){
-	// if(!)
-	printMessage('으악!!.. 너무 끔찍하다.. 시체의 팔다리가 없다\n그나저나 이 사람 어딘가 낯이 익은데..')
+	printMessage('자세히 살펴보려 가까이 다가가자 옆의 벽에서 거울이 나타났다!')
+	basement2.mirror.show()
 }
 
 
 // 시체2 - 팔 0 다리 1
 // basement2.corpse2 = new Object(basement2, 'corpse2', '몸3.png')
 
-
-
 basement2.mirror = new Object(basement2, 'mirror', '거울.png')
 basement2.mirror.resize(200)
 basement2.mirror.locate(1150, 340)
-// basement2.mirror.hide()
+basement2.mirror.hide()
+
 
 
 
