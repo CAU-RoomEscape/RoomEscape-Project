@@ -777,7 +777,7 @@ Mroom1.text=new Object(Mroom1,'text','마우스.png')
 Mroom1.text.resize(200)
 Mroom1.text.locate(650,350)
 Mroom1.text.onClick=function(){
-	printMessage("문은 자물쇠로 잠겨있다.")
+	printMessage('문은 자물쇠로 잠겨있다')
 }
 
 // 전등
@@ -833,7 +833,8 @@ Mroom1U.markR1U.locate(370,150)
 
 Mroom1U.markR1U.onClick = function(){
 	if(Mroom2.scope.isHanded()){
-		showImageViewer("이미지.png","");
+        showImageViewer("이미지.png","");
+        printMessage('"전등을 보아라"라는 글귀가 밑에 적혀 있다')
 	}
 	else {
 		printMessage("너무 멀어서 보이지 않는다..");
@@ -845,7 +846,7 @@ Mroom1U.text=new Object(Mroom1U,'text','마우스.png')
 Mroom1U.text.resize(250)
 Mroom1U.text.locate(650,400)
 Mroom1U.text.onClick=function(){
-	printMessage("밖에는 눈이 내리고 있다..")
+	printMessage('밖에는 눈이 내리고 있다..')
 }
 
 //쌍안경 생성
@@ -878,11 +879,11 @@ Mroom3.Mpainting1.hide()
 
 Mroom3.painting.onClick = function(){
     if(Mroom2F.paper.isHanded()){
-		printMessage("찢어진 부분에 딱 맞았다.")
+		printMessage('찢어진 부분에 딱 맞았다')
 		Mroom3.Mpainting1.show()
 		Mroom3.painting.hide()
-	}	else {
-		printMessage("그림이 조금 찢어져있다.")
+	}	else if(!Mroom2F.paper.isHanded()) {
+		printMessage('그림이 조금 찢어져있다')
 	}
 }
 
@@ -891,7 +892,7 @@ Mroom3.text=new Object(Mroom3,'text','마우스.png')
 Mroom3.text.resize(200)
 Mroom3.text.locate(650,350)
 Mroom3.text.onClick=function(){
-	printMessage("문이 반대편에서 잠겨있는 듯하다.. \n작은 글씨로 '들어오지마 여보' 라고 적혀있다.")
+	printMessage('문이 반대편에서 잠겨있는 듯하다..\n작은 글씨로 "들어오지마 여보" 라고 적혀있다')
 }
 
 //2층 발견
@@ -899,7 +900,7 @@ Mroom3U.text=new Object(Mroom3U,'text','마우스.png')
 Mroom3U.text.resize(500)
 Mroom3U.text.locate(650,400)
 Mroom3U.text.onClick=function(){
-	printMessage("2층이 있다 사다리로 올라갈 수 있을 거 같은데..")
+	printMessage('2층이 있다 사다리로 올라갈 수 있을 거 같은데..')
 }
 
 //책 생성
@@ -909,17 +910,15 @@ Mroom4.MbookClo.locate(500,350)
 
 Mroom4.MbookClo.onClick = function(){
     if(Mroom4.MbookClo.isClosed()){
-        printMessage("책은 잠겨있다.")
+        printMessage('책이 잠겨있다')
         showKeypad("alphabet", "EFCBH" , function(){ // 키패드 1 - 숫자4자리
-            printMessage("책이 열렸다 !!")
-            Mroom4.MbookClo.setSprite("책open.png")
+            printMessage('책이 열렸다!')
+            Mroom4.MbookClo.setSprite('책open.png')
             Mroom4.MbookClo.open();
             Mroom4.key1.show();
-
-
-     });}
-    else{
-		showImageViewer("일기1.png","")
+        })
+    } else if(Mroom4.MbookClo.isOpened()){
+		showImageViewer('일기1.png')
 	}
 }
 
@@ -1727,7 +1726,7 @@ path9.photo5.lock()
 
 path9.photo5.onClick=function(){
     showImageViewer('기억5다이어리.png')
-    printMessage('이거는 아까 그 오두막 안 인것 같은데.. 도대체 무슨일이 있었던거지?!\n 그리고.. 난.. 누구지..?')
+    printMessage('이거는 아까 그 오두막 안 인것 같은데..\n도대체 무슨일이 있었던거지?!\n 그리고.. 난.. 누구지..?')
 path9.photo5.open()
 }
 
@@ -1790,7 +1789,7 @@ pathfinal.people.onClick=function(){
     if(path1.photo1.isOpened()&&path3.photo2.isOpened()&&path4.photo3.isOpened()&&path7.photo4.isOpened()&&path9.photo5.isOpened())
 {
     Game.move(this.connectedTo)
-    printMessage('낯선 남자가 다이어리를 건네고 있다. 이 다이어리는 지금까지 봤던 남자의 다이어리와 같은 것이다..')
+    printMessage('낯선 남자가 다이어리를 건네고 있다.\n이 다이어리는 지금까지 봤던 남자의 다이어리와 같은 것이다..')
     }
     else{
         printMessage('이 사람들은 뭐지..? 나에게 뭔가 말하고 있다\n"숲에서 모든 기억들을 찾아 돌아오면 마지막 진실을 알려주겠다.."')
@@ -1885,4 +1884,4 @@ maze[15].mzShape[0].Ending.onClick = function(){
 }
 
 
-Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(pathstart, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
