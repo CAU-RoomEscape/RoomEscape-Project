@@ -315,12 +315,17 @@ maze[15].mzShape[0].Down.locate(640,600)
 maze[15].mzShape[0].Ending = new Object(maze[15].mzShape[0],'Ending','화살표-위.png')
 maze[15].mzShape[0].Ending.locate(640,540)
 maze[15].mzShape[0].Ending.resize(50)
+maze[15].mzShape[0].Edladder = new Object(maze[15].mzShape[0],'Edladder','사다리mz.png')
+maze[15].mzShape[0].Edladder.locate(640,320)
+maze[15].mzShape[0].Edladder.resize(280)
 maze[15].mzShape[0].Ending.onClick = function(){
 	Game.end()
 }
-//maze[15].mzShape[0].Up.locate(640,560)
+
 
 
 //---------------시작-------------------//
 
-Game.start(maze[0].mzShape[0])
+Game.start(maze[15].mzShape[0])
+game.setTimer(300,1,"sec")
+game.showTimer()
