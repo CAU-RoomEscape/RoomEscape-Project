@@ -201,9 +201,9 @@ Item.member('isHanded', function(){
 //================================================================================
 
 //----방 생성----//
-room1 = new Room('room1', '검은방.png')
+start = new Room('start', '검은방.png')
 corridor1 = new Room('corridor1', '복도-1.jpg')
-room2 = new Room('room2', '방-2.jpg')
+start_next = new Room('start_next', '방-2.jpg')
 basement1 = new Room('basement1', '지하실-1.png')
 basement2 = new Room('basement2', '지하실-2.png')
 mirrorR = new Room('mirror', '거울속_.png')
@@ -212,20 +212,20 @@ mirrorR = new Room('mirror', '거울속_.png')
 //----첫번째 방----//
 
 // 화살표->복도
-room1.Left = new Arrow(room1, 'Left', corridor1)
-room1.Left.resize(40)
-room1.Left.locate(40, 360)
+start.Left = new Arrow(start, 'Left', corridor1)
+start.Left.resize(40)
+start.Left.locate(40, 360)
 
-room1.goat = new Object(room1, 'goat', '흑염소2.png')
-room1.goat.resize(85)
-room1.goat.locate(980, 80)
+start.goat = new Object(start, 'goat', '흑염소2.png')
+start.goat.resize(85)
+start.goat.locate(980, 80)
 
 //----복도1----//
-corridor1.door1 = new Direction(corridor1, 'door1', '투명.png', room1)
+corridor1.door1 = new Direction(corridor1, 'door1', '투명.png', start)
 corridor1.door1.resize(160)
 corridor1.door1.locate(770, 365)
 
-corridor1.door2 = new Direction(corridor1, 'door2', '투명.png', room2)
+corridor1.door2 = new Direction(corridor1, 'door2', '투명.png', start_next)
 corridor1.door2.resize(120)
 corridor1.door2.locate(410, 380)
 
@@ -239,17 +239,17 @@ corridor1.door2.locate(410, 380)
 //----두번째 방----//
 
 // 복도로 통하는 문
-room2.door1 = new Direction(room2, 'door1', '투명.png', corridor1)
-room2.door1.resize(110)
-room2.door1.locate(350, 370)
+start_next.door1 = new Direction(start_next, 'door1', '투명.png', corridor1)
+start_next.door1.resize(110)
+start_next.door1.locate(350, 370)
 
 // 지하실 입구
-room2.door2 = new Direction(room2, 'door2', '지하실-입구.png', basement1)
-room2.door2.resize(180)
-room2.door2.locate(530, 650)
-room2.door2.hide()
-room2.door2.lock()
-room2.door2.onClick = function(){
+start_next.door2 = new Direction(start_next, 'door2', '지하실-입구.png', basement1)
+start_next.door2.resize(180)
+start_next.door2.locate(530, 650)
+start_next.door2.hide()
+start_next.door2.lock()
+start_next.door2.onClick = function(){
 	if(this.id.isLocked()){
 		printMessage('잠겨 있는 것 같다')
 	} else if(!this.id.isLocked()){
@@ -258,100 +258,100 @@ room2.door2.onClick = function(){
 }
 
 // 중앙 테이블
-room2.table = new Object(room2, 'table', '테이블-1.png')
-room2.table.resize(380)
-room2.table.locate(530, 570)
-room2.table.lock()
-room2.table.onClick = function(){
-	if(!room2.gemstone.isHanded() && this.id.isLocked()){
+start_next.table = new Object(start_next, 'table', '테이블-1.png')
+start_next.table.resize(380)
+start_next.table.locate(530, 570)
+start_next.table.lock()
+start_next.table.onClick = function(){
+	if(!start_next.gemstone.isHanded() && this.id.isLocked()){
 		printMessage('중앙에 무언가를 넣을만한 홈이 파여져 있다')
-	} else if(room2.gemstone.isHanded() && this.id.isLocked()){
+	} else if(start_next.gemstone.isHanded() && this.id.isLocked()){
 		this.id.unlock()
 		this.id.setSprite('테이블-1-보석.png')
 		printMessage('(딸깍! 구르르르릉) 기계 장치들이 부딪히는 소리가 들린다')
 		this.id.move(300, 0)
-		room2.question.move(300, 0)
-		room2.door2.show()
-		room2.leverL.unlock()
+		start_next.question.move(300, 0)
+		start_next.door2.show()
+		start_next.leverL.unlock()
 	} else if(!this.id.isLocked()){
 		printMessage('더이상 움직이지 않는 모양이다')
 	}
 }
 
 // 레버 손잡이
-room2.leverhandle = new Item(room2, 'leverhandle', '레버 손잡이.png')
-room2.leverhandle.resize(7)
-room2.leverhandle.locate(840, 320)
-room2.leverhandle.onClick = function(){
+start_next.leverhandle = new Item(start_next, 'leverhandle', '레버 손잡이.png')
+start_next.leverhandle.resize(7)
+start_next.leverhandle.locate(840, 320)
+start_next.leverhandle.onClick = function(){
 	this.id.pick()
 }
 
 // 레버 받침
-room2.lever = new Object(room2, 'lever', '레버 받침3.png')
-room2.lever.resize(110)
-room2.lever.locate(260, 550)
-room2.lever.onClick = function(){
-	if(room2.leverhandle.isHanded()){
+start_next.lever = new Object(start_next, 'lever', '레버 받침.png')
+start_next.lever.resize(110)
+start_next.lever.locate(260, 550)
+start_next.lever.onClick = function(){
+	if(start_next.leverhandle.isHanded()){
 		printMessage('손잡이를 꽂아 넣었다')
 		this.id.hide()
-		room2.leverL.show()
+		start_next.leverL.show()
 	} else{
 		printMessage('기계 장치인거 같다')
 	}
 }
 
 // 레버 본체
-room2.leverL = new Object(room2, 'leverL', '레버 본체.png')
-room2.leverL.resize(110)
-room2.leverL.locate(260, 550)
-room2.leverL.hide()
-room2.leverL.lock()
-room2.leverL.onClick = function(){
+start_next.leverL = new Object(start_next, 'leverL', '레버 본체.png')
+start_next.leverL.resize(110)
+start_next.leverL.locate(260, 550)
+start_next.leverL.hide()
+start_next.leverL.lock()
+start_next.leverL.onClick = function(){
 	if(this.id.isLocked()){
 		printMessage('손잡이가 움직이지 않는다')
 	} else if(!this.id.isLocked()){
 		printMessage('손잡이를 잡아 내렸다')
-		room2.door2.unlock()
-		room2.door2.setSprite('지하실-입구-열림.png')
+		start_next.door2.unlock()
+		start_next.door2.setSprite('지하실-입구-열림.png')
 		this.id.setSprite('레버-작동.png')
 	}
 }
 
 // 상자
-room2.box = new Object(room2, 'box', '비밀상자2.png')
-room2.box.resize(90)
-room2.box.locate(1030, 340)
-room2.box.onClick = function(){
+start_next.box = new Object(start_next, 'box', '비밀상자2.png')
+start_next.box.resize(90)
+start_next.box.locate(1030, 340)
+start_next.box.onClick = function(){
 	showKeypad('alphabet', 'WATER', function(){
 		printMessage('(딸깍)')
-		room2.box.setSprite('비밀상자2_.png')
-		room2.gemstone.show()
+		start_next.box.setSprite('비밀상자2_.png')
+		start_next.gemstone.show()
 	})
 }
 
 // 푸른 보석
-room2.gemstone = new Item(room2, 'gemstone', '보석.png')
-room2.gemstone.resize(30)
-room2.gemstone.locate(1030, 340)
-room2.gemstone.hide()
-room2.gemstone.onClick = function(){
+start_next.gemstone = new Item(start_next, 'gemstone', '보석.png')
+start_next.gemstone.resize(30)
+start_next.gemstone.locate(1030, 340)
+start_next.gemstone.hide()
+start_next.gemstone.onClick = function(){
 	this.id.pick()
 }
 
 // 수수께끼 종이
-room2.question = new Object(room2, 'question', '종이.png')
-room2.question.resize(30)
-room2.question.locate(580, 490)
-room2.question.onClick = function(){
+start_next.question = new Object(start_next, 'question', '종이.png')
+start_next.question.resize(30)
+start_next.question.locate(580, 490)
+start_next.question.onClick = function(){
 	printMessage('물질?..')
 	showImageViewer('수수께끼1.png')
 }
 
 // 종이 뭉치
-room2.papers = new Object(room2, 'papers', '종이 뭉치.png')
-room2.papers.resize(60)
-room2.papers.locate(90, 520)
-room2.papers.onClick = function(){
+start_next.papers = new Object(start_next, 'papers', '종이 뭉치.png')
+start_next.papers.resize(60)
+start_next.papers.locate(90, 520)
+start_next.papers.onClick = function(){
 	printMessage('알 수 없는 문자가 빼곡히 적혀 있다')
 }
 
@@ -359,7 +359,7 @@ room2.papers.onClick = function(){
 
 
 //----지하실 입구----//
-basement1.Up = new Arrow(basement1, 'Up', room2)
+basement1.Up = new Arrow(basement1, 'Up', start_next)
 basement1.Up.resize(40)
 basement1.Up.locate(290, 320)
 
@@ -392,9 +392,13 @@ basement2.corpse1.onClick = function(){
 
 
 
+basement2.mirror = new Object(basement2, 'mirror', '거울.png')
+basement2.mirror.resize(200)
+basement2.mirror.locate(1150, 340)
+// basement2.mirror.hide()
 
 
 
 
 
-Game.start(room1, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?...')
+Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?...')
