@@ -73,7 +73,8 @@ Tragic Escape
 * 거울 - 첫번째 기억으로 간다
 
 ## 2. 첫번째 기억
-Mroom1
+Mroom1U
+
 •벽면 상단에 표시 - Mroom2에 쌍안경 이용
 
 Mroom1 
