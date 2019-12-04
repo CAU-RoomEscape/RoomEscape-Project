@@ -109,7 +109,7 @@ Object.member('pick', function(){
 Object.member('isPicked', function(){
 	return this.id.isPicked()
 })
-
+Object.member('onClick',function(){})
 // Direction 정의
 function Direction(room, name, Image, connectedTo){
 	Object.call(this, room, name, Image)
@@ -1844,15 +1844,28 @@ maze[0].mzShape[2].Left.locate(590,580)
 
 //-----------미로 도착점 설정------------//
 
+mazeEnd = new Room('mazeEnd',"미로 끝.jpg")
+mazeEnd.Ending = new Object(mazeEnd,'Ending','화살표-오른쪽.png')
+mazeEnd.Ending.locate(1100,360)
+mazeEnd.Ending.resize(50)
+
 maze[15].mzShape[0].Down = new Arrow(maze[15].mzShape[0],'Down',maze[maze[15].mzRelated[0]-1].mzShape[2])
 maze[15].mzShape[0].Down.locate(640,600)
-maze[15].mzShape[0].Ending = new Object(maze[15].mzShape[0],'Ending','화살표-위.png')
-maze[15].mzShape[0].Ending.locate(640,540)
-maze[15].mzShape[0].Ending.resize(50)
+maze[15].mzShape[0].Up = new Arrow(maze[15].mzShape[0],'Up',mazeEnd)
+maze[15].mzShape[0].Up.locate(640,540)
 maze[15].mzShape[0].Edladder = new Object(maze[15].mzShape[0],'Edladder','사다리mz.png')
 maze[15].mzShape[0].Edladder.locate(640,320)
 maze[15].mzShape[0].Edladder.resize(280)
-maze[15].mzShape[0].Ending.onClick = function(){
+
+maze[15].mzShape[0].Up.onClick = function(){
+	Game.move(mazeEnd)
+	printMessage('바로 걸쇠를 내려 문을 닫아버렸다..\n더이상 오지 못하는 모양이다')
+	game.hideTimer()
+	game.stopTimer()
+}
+//엔딩추가하세요.
+
+mazeEnd.Ending.onClick = function(){
 	Game.end()
 }
 
