@@ -109,7 +109,7 @@ Object.member('pick', function(){
 Object.member('isPicked', function(){
 	return this.id.isPicked()
 })
-Object.member('onClick',function(){})
+
 // Direction 정의
 function Direction(room, name, Image, connectedTo){
 	Object.call(this, room, name, Image)
@@ -1346,7 +1346,7 @@ attic.angel.onClick=function(){
 
 attic.chest=new Openclose(attic,'chest','chest-close.png','chest-open.png')
 attic.chest.resize(200)
-attic.chest.locate(120,500)
+attic.chest.locate(130,500)
 attic.chest.lock()
 
 attic.water=new Item(attic,'water','물병.png')
@@ -1435,7 +1435,12 @@ Mroom6.moldr.onClick=function(){
     if(dining2.cube1.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
-     printMessage('틀에 붉은 큐브를 끼워 넣었다.')
+        printMessage('틀에 붉은 큐브를 끼워 넣었다.')
+        if(Mroom6.moldb.isOpened()){
+            Mroom6.transparent.hide()
+            Mroom6.totheForest.show()
+            printMessage('큐브를 모두 꽂으니 사진이 나타났다..!\n아까처럼 새로운 공간으로 이동할 수 있을까..?')
+        }
     }
     else if(!dining2.cube1.isHanded()){
         printMessage('무언가 넣을 수 있는 틀이다.')
@@ -1446,7 +1451,12 @@ Mroom6.moldb.onClick=function(){
     if(Mroom5.cube2.isHanded()){
         this.id.setSprite(this.openedImage)
         this.id.open()
-     printMessage('틀에 파란 큐브를 끼워 넣었다.')
+        printMessage('틀에 파란 큐브를 끼워 넣었다.')
+        if(Mroom6.moldr.isOpened()){
+            Mroom6.transparent.hide()
+            Mroom6.totheForest.show()
+            printMessage('큐브를 모두 꽂으니 사진이 나타났다..!\n아까처럼 새로운 공간으로 이동할 수 있을까..?')
+        }
     }
     else if(!Mroom5.cube2.isHanded()){
         printMessage('무언가 넣을 수 있는 틀이다.')
@@ -1475,18 +1485,11 @@ Mroom6.moldy.onClick=function(){
 }
 */
 
-
-Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
-Mroom6.transparent.resize(100)
-Mroom6.transparent.locate(640,250)
-Mroom6.transparent.hide()
-
 Mroom6.paper=new Object(Mroom6,'paper','종이-힌트.png')
 Mroom6.paper.resize(80)
 Mroom6.paper.locate(800,600)
-
 Mroom6.paper.onClick=function(){
-    showImageViewer('종이-힌트1.png')
+    showImageViewer('종이-힌트2.png')
     printMessage('중요한 날..? 기억해 둬야 겠다.')
 }
 
@@ -1499,20 +1502,14 @@ Mroom6.totheForest.onClick=function(){
     Game.move(this.connectedTo)
     printMessage('이번에도 사진을 통해 다른 공간으로 넘어왔다..!! 그런데 저 여자는 누구지..? 매우 낯이 익다..')
 }
+
+Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
+Mroom6.transparent.resize(100)
+Mroom6.transparent.locate(640,250)
 //기억 3이랑 합칠 때 direction으로 바꾸기
 
 Mroom6.transparent.onClick=function(){
-if(Mroom6.moldb.isOpened()&&Mroom6.moldr.isOpened())
-{
-    Mroom6.totheForest.show()
-    Mroom6.transparent.hide()
-
-   // room2.totheForest.show()
-    //room2.arrow1.show()
-//this.id.setSprite(this.openedImage)
-    printMessage('큐브를 모두 꽂으니 사진이 나타났다..! 아까처럼 새로운 공간으로 이동할 수 있을까..?')
-}
-else{printMessage('여기 뭔가 걸려있었던 흔적이 있다..')}
+        printMessage('여기 뭔가 걸려있었던 흔적이 있다..')
 }
 
 //화살표
@@ -1872,4 +1869,4 @@ mazeEnd.Ending.onClick = function(){
 }
 
 
-Game.start(corridor3, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(Mroom, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
