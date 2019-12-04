@@ -1859,15 +1859,16 @@ maze[15].mzShape[0].Edladder.resize(280)
 
 maze[15].mzShape[0].Up.onClick = function(){
 	Game.move(mazeEnd)
-	printMessage('바로 걸쇠를 내려 문을 닫아버렸다..\n더이상 오지 못하는 모양이다')
+	printMessage('바로 레버를 당겨 쇠창살을 내렸다..\n더이상 오지 못하는 모양이다')
 	game.hideTimer()
 	game.stopTimer()
 }
 //엔딩추가하세요.
 
 mazeEnd.Ending.onClick = function(){
+    printMessage('건물을 나와 한없이 숲을 내달렸다..따돌리는 것에 성공했다')
 	Game.end()
 }
 
 
-Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(corridor3, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
