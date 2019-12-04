@@ -1869,4 +1869,4 @@ mazeEnd.Ending.onClick = function(){
 }
 
 
-Game.start(Mroom, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
