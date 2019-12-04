@@ -1482,17 +1482,14 @@ Mroom6.moldy.onClick=function(){
 */
 
 
-Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
-Mroom6.transparent.resize(100)
-Mroom6.transparent.locate(640,250)
-Mroom6.transparent.hide()
+
 
 Mroom6.paper=new Object(Mroom6,'paper','종이-힌트.png')
 Mroom6.paper.resize(80)
 Mroom6.paper.locate(800,600)
 
 Mroom6.paper.onClick=function(){
-    showImageViewer('종이-힌트1.png')
+    showImageViewer('종이-힌트2.png')
     printMessage('중요한 날..? 기억해 둬야 겠다.')
 }
 
@@ -1505,6 +1502,11 @@ Mroom6.totheForest.onClick=function(){
     Game.move(this.connectedTo)
     printMessage('이번에도 사진을 통해 다른 공간으로 넘어왔다..!! 그런데 저 여자는 누구지..? 매우 낯이 익다..')
 }
+
+Mroom6.transparent=new Object(Mroom6,'transparent','투명.png')
+Mroom6.transparent.resize(100)
+Mroom6.transparent.locate(640,250)
+Mroom6.transparent.show()
 //기억 3이랑 합칠 때 direction으로 바꾸기
 
 Mroom6.transparent.onClick=function(){
