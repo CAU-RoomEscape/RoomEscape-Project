@@ -39,9 +39,6 @@ function Room(name, background){
 	this.background = background
 	this.id = game.createRoom(name, background)
 }
-Room.member('setRoomLight', function(intensity){
-	this.id.setRoomLight(intensity)
-})
 
 // Object 정의
 function Object(room, name, image){
@@ -176,20 +173,6 @@ openclose.member('onOpen', function(){
 })
 openclose.member('onClose', function(){
 	this.id.setSprite(this.closedImage)
-})
-
-// Keypad 정의
-function Keypad(room, name, image, password, callback){
-	Object.call(this, room, name, image)
-
-	this.password = password
-	this.callback = callback
-}
-
-Keypad.prototype = new Object() // inherited from Object
-
-Keypad.member('onClick', function(){
-	showKeypad('number', this.password, this.callback)
 })
 
 // Item 정의
@@ -798,33 +781,29 @@ Mroom1.text2.onClick=function(){
 
 
 //box2 생성
-Mroom1.box2=new Object(Mroom1,'box2','마우스.png')
+Mroom1.box2 = new Object(Mroom1,'box2','마우스.png')
 Mroom1.box2.resize(100)
 Mroom1.box2.locate(1000,380)
 Mroom1.box2.close()
-Mroom1.box2.onClick=function(){
+Mroom1.box2.onClick = function(){
     if(Mroom1.box2.isClosed()){
-        printMessage("잠겨있다.")
+        printMessage("잠겨있다")
         showKeypad("number", "1457" , function(){ // 키패드 1 - 숫자4자리
-            printMessage("열렸다!!")
-            Mroom1.box2.open();
-
-
-     })}
-     else if(Mroom1.box2.isOpened()){
-        showImageViewer("box2.png","")
-        Mroom1.handle.pick();
-        printMessage("안에서 드라이버 손잡이를 주웠다.")
+            printMessage("열렸다!")
+            Mroom1.box2.open()
+        })
+    } else if(Mroom1.box2.isOpened()){
+        showImageViewer('box2.png')
+        printMessage('상자를 열면서 무언가가 바닥에 떨어졌다')
+        Mroom1.handle.show()
      }
 }
 
-//손잡이 생성
-Mroom1.handle=new Item(Mroom1,'handle','손잡이.png')
-Mroom1.handle.resize(800)
-Mroom1.handle.locate(540,350)
+// 드라이버 손잡이 생성
+Mroom1.handle = new Item(Mroom1,'handle','손잡이.png')
+Mroom1.handle.resize(60)
+Mroom1.handle.locate(1015,650)
 Mroom1.handle.hide()
-
-
 
 //Mroom1U 표시 보기
 Mroom1U.markR1U=new Object(Mroom1U,'markR1U','마우스.png')
@@ -888,10 +867,10 @@ Mroom3.painting.onClick = function(){
 }
 
 // 이상해 보이는 문
-Mroom3.text=new Object(Mroom3,'text','마우스.png')
+Mroom3.text = new Object(Mroom3,'text','마우스.png')
 Mroom3.text.resize(200)
 Mroom3.text.locate(650,350)
-Mroom3.text.onClick=function(){
+Mroom3.text.onClick = function(){
 	printMessage('문이 반대편에서 잠겨있는 듯하다..\n작은 글씨로 "들어오지마 여보" 라고 적혀있다')
 }
 
@@ -1884,4 +1863,4 @@ maze[15].mzShape[0].Ending.onClick = function(){
 }
 
 
-Game.start(pathstart, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
