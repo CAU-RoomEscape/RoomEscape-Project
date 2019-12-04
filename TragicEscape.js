@@ -76,12 +76,6 @@ Object.member('move', function(x, y){
 	this.id.moveX(x)
 	this.id.moveY(y)
 })
-Object.member('moveX', function(x){
-	this.id.moveX(x)
-})
-Object.member('moveY', function(y){
-	this.id.moveY(y)
-})
 Object.member('show', function(){
 	this.id.show()
 })
@@ -115,7 +109,7 @@ Object.member('pick', function(){
 Object.member('isPicked', function(){
 	return this.id.isPicked()
 })
-
+Object.member('onClick',function(){})
 // Direction 정의
 function Direction(room, name, Image, connectedTo){
 	Object.call(this, room, name, Image)
@@ -140,8 +134,8 @@ function Arrow(room, name, connectedTo){
 		Direction.call(this, room, name, '화살표-위.png', connectedTo)
 	} else if(name == 'Down'){
 		Direction.call(this, room, name, '화살표-아래.png', connectedTo)
-	}
-  this.resize(50)
+    }
+    this.resize(50)
 }
 
 Arrow.prototype = new Direction() // Direction 상속
@@ -152,26 +146,26 @@ Arrow.member('onClick', function(){
 
 
 // Openclose 정의
-function openclose(room, name, closedImage, openedImage){
+function Openclose(room, name, closedImage, openedImage){
 	Object.call(this, room, name, closedImage)
 
 	this.closedImage = closedImage
 	this.openedImage = openedImage
 }
 
-openclose.prototype = new Object() // inherited from Object
+Openclose.prototype = new Object() // inherited from Object
 
-openclose.member('onClick', function(){
+Openclose.member('onClick', function(){
 	if (!this.id.isLocked() && this.id.isClosed()){
 		this.id.open()
 	} else if (this.id.isOpened){
 		this.id.close()
 	}
 })
-openclose.member('onOpen', function(){
+Openclose.member('onOpen', function(){
 	this.id.setSprite(this.openedImage)
 })
-openclose.member('onClose', function(){
+Openclose.member('onClose', function(){
 	this.id.setSprite(this.closedImage)
 })
 
@@ -1071,7 +1065,7 @@ Bigdoor.arrow1.hide()*/
 
 
 //------------------------------------------------------------//이제부터 방
-dining1.fireplace=new openclose(dining1,'fireplace','벽난로.png','벽난로-불.png')
+dining1.fireplace=new Openclose(dining1,'fireplace','벽난로.png','벽난로-불.png')
 dining1.fireplace.resize(450)
 dining1.fireplace.locate(800,300)
 dining1.fireplace.lock()//벽난로 배치
@@ -1130,7 +1124,7 @@ dining2.match.onClick=function(){
     this.id.pick()
 }
 //성냥
-dining2.plant1=new openclose(dining2,'plant1','화분-흙.png','화분-씨앗.png')
+dining2.plant1=new Openclose(dining2,'plant1','화분-흙.png','화분-씨앗.png')
 dining2.plant1.resize(110)
 dining2.plant1.locate(620,325)
 dining2.plant1.lock()
@@ -1143,7 +1137,7 @@ dining2.cube1.hide()
 
 //거실2 배치 완료
 
-dining3.cabinet=new openclose(dining3,'cabinet','캐비닛2-2-닫힘.png','캐비닛2-2-열림.png')
+dining3.cabinet=new Openclose(dining3,'cabinet','캐비닛2-2-닫힘.png','캐비닛2-2-열림.png')
 dining3.cabinet.resize(320)
 dining3.cabinet.locate(250,420)
 dining3.cabinet.lock()
@@ -1210,7 +1204,7 @@ this.id.setSprite(openedImage)}
 
 
 //거실3 배치 완료
-dining4.crack=new openclose(dining4,'crack','크랙.png','크랙-부서짐.png')
+dining4.crack=new Openclose(dining4,'crack','크랙.png','크랙-부서짐.png')
 dining4.crack.resize(300)
 dining4.crack.locate(300,235)
 dining4.crack.lock()
@@ -1244,7 +1238,7 @@ dining4.book1.onClick=function(){
     printMessage('책 사이에 이상한 종이가 끼워져 있다...')
 }
 
-/*dining4.chest=new openclose(dining4,'chest','chest-close.png','chest-open.png')
+/*dining4.chest=new Openclose(dining4,'chest','chest-close.png','chest-open.png')
 dining4.chest.resize(200)
 dining4.chest.locate(300,500)
 dining4.chest.lock()
@@ -1297,7 +1291,7 @@ printMessage('유령이 인형을 찾아달라고 말하고 있다..')
 }
 
 
-/*Mroom5.chest=new openclose(Mroom5,'chest','chest1-닫힘.png','chest1-열림.png')
+/*Mroom5.chest=new Openclose(Mroom5,'chest','chest1-닫힘.png','chest1-열림.png')
 Mroom5.chest.resize(200)
 Mroom5.chest.locate(240,600)
 Mroom5.chest.lock()
@@ -1350,7 +1344,7 @@ attic.angel.onClick=function(){
 }
 //천사 배치
 
-attic.chest=new openclose(attic,'chest','chest-close.png','chest-open.png')
+attic.chest=new Openclose(attic,'chest','chest-close.png','chest-open.png')
 attic.chest.resize(200)
 attic.chest.locate(120,500)
 attic.chest.lock()
@@ -1400,22 +1394,22 @@ dining2.plant1.onClick=function(){
 }
 
 //공략
-Mroom6.moldr=new openclose(Mroom6,'moldr','틀-빨강.png','틀완성-빨강.png')
+Mroom6.moldr=new Openclose(Mroom6,'moldr','틀-빨강.png','틀완성-빨강.png')
 Mroom6.moldr.resize(100)
 Mroom6.moldr.locate(500,170)
 Mroom6.moldr.lock()
 
-Mroom6.moldb=new openclose(Mroom6,'moldb','틀-파랑.png','틀완성-파랑.png')
+Mroom6.moldb=new Openclose(Mroom6,'moldb','틀-파랑.png','틀완성-파랑.png')
 Mroom6.moldb.resize(100)
 Mroom6.moldb.locate(780,170)
 Mroom6.moldb.lock()
 
-/*Mroom6.moldg=new openclose(Mroom6,'moldg','틀-초록.png','틀완성-초록.png')
+/*Mroom6.moldg=new Openclose(Mroom6,'moldg','틀-초록.png','틀완성-초록.png')
 Mroom6.moldg.resize(100)
 Mroom6.moldg.locate(500,330)
 Mroom6.moldg.lock()
 
-Mroom6.moldy=new openclose(Mroom6,'moldy','틀-노랑.png','틀완성-노랑.png')
+Mroom6.moldy=new Openclose(Mroom6,'moldy','틀-노랑.png','틀완성-노랑.png')
 Mroom6.moldy.resize(100)
 Mroom6.moldy.locate(780,330)
 Mroom6.moldy.lock()*/
@@ -1851,17 +1845,31 @@ maze[0].mzShape[2].Left.locate(590,580)
 
 //-----------미로 도착점 설정------------//
 
+mazeEnd = new Room('mazeEnd',"미로 끝.jpg")
+mazeEnd.Ending = new Object(mazeEnd,'Ending','화살표-오른쪽.png')
+mazeEnd.Ending.locate(1100,360)
+mazeEnd.Ending.resize(50)
+
 maze[15].mzShape[0].Down = new Arrow(maze[15].mzShape[0],'Down',maze[maze[15].mzRelated[0]-1].mzShape[2])
 maze[15].mzShape[0].Down.locate(640,600)
-maze[15].mzShape[0].Ending = new Object(maze[15].mzShape[0],'Ending','화살표-위.png')
-maze[15].mzShape[0].Ending.locate(640,540)
-maze[15].mzShape[0].Ending.resize(50)
+maze[15].mzShape[0].Up = new Arrow(maze[15].mzShape[0],'Up',mazeEnd)
+maze[15].mzShape[0].Up.locate(640,540)
 maze[15].mzShape[0].Edladder = new Object(maze[15].mzShape[0],'Edladder','사다리mz.png')
 maze[15].mzShape[0].Edladder.locate(640,320)
 maze[15].mzShape[0].Edladder.resize(280)
-maze[15].mzShape[0].Ending.onClick = function(){
+
+maze[15].mzShape[0].Up.onClick = function(){
+	Game.move(mazeEnd)
+	printMessage('바로 레버를 당겨 쇠창살을 내렸다..\n더이상 오지 못하는 모양이다')
+	game.hideTimer()
+	game.stopTimer()
+}
+//엔딩추가하세요.
+
+mazeEnd.Ending.onClick = function(){
+    printMessage('건물을 나와 한없이 숲을 내달렸다..따돌리는 것에 성공했다')
 	Game.end()
 }
 
 
-Game.start(start, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
+Game.start(corridor3, '찢어지는듯한 통증을 이겨내고 눈을 떴다\n\n주변은 조용하다\n\n도대체 여긴 어디지?..')
